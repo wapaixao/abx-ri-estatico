@@ -6,9 +6,10 @@ from openpyxl.utils import get_column_letter, column_index_from_string, range_bo
 
 ROOT = Path('/root/content/sites/abx-ri-estatico')
 DATA_PATH = ROOT/'data.json'
-DRU_XLSX = Path('/root/data/abx/entregas/APRESENTACAO/ABX_DRU_RI_Receita_Gerencial_U006_VALIDACAO_V3_AUDITADA.xlsx')
-U006_XLSX = Path('/root/data/abx/entregas/APRESENTACAO/ABX_Receita_Gerencial_U006_2T2026_VALIDACAO.xlsx')
+DRU_XLSX = Path('/root/data/abx/entregas/APRESENTACAO/ABX_DRU_RI_Receita_Gerencial_U006_VALIDACAO_V4_AUDITADA.xlsx')
+U006_XLSX = Path('/root/data/abx/entregas/APRESENTACAO/ABX_Receita_Gerencial_U006_1T_2T2026_VALIDACAO.xlsx')
 PISCOFINS_XLSX = Path('/root/data/abx/APURACAO_COFINS_PIS_2T2026_COMPLETA_FORMATADA_SEM_OBS.xlsx')
+RESUMO_XLSX = Path('/root/data/abx/APURACAO_COFINS_PIS_2T2026_COMPLETA_FORMATADA_SEM_OBS_COM_RESUMO_VALIDACAO_V3.xlsx')
 
 REF_RE = re.compile(r"(?:(?:'([^']+)'|([A-Za-z0-9_À-ÿ ]+))!)?(\$?[A-Z]{1,3}\$?[0-9]{1,5})(?![A-Za-z0-9_])")
 RANGE_RE = re.compile(r"(?:(?:'([^']+)'|([A-Za-z0-9_À-ÿ ]+))!)?(\$?[A-Z]{1,3}\$?[0-9]{1,5}):(\$?[A-Z]{1,3}\$?[0-9]{1,5})")
@@ -285,8 +286,9 @@ def main():
     data=json.loads(DATA_PATH.read_text())
     reports=data.setdefault('reports',{})
     reports['DRU']=extract_dru()
-    reports['U006']=extract_sheet_report(U006_XLSX,'Receita Gerencial U006','Receita Gerencial U006',max_row=11,max_col=76)
+    reports['U006']=extract_sheet_report(U006_XLSX,'Receita Gerencial U006','Receita Gerencial U006',max_row=9,max_col=43)
     reports['PISCOFINS']=extract_piscofins_control()
+    reports['RESUMO']=extract_sheet_report(RESUMO_XLSX,'Resumo','Resumo — PIS/COFINS e Lucros',max_row=20,max_col=10)
     reports['DISTRIB']=apply_dru_lucro_to_distrib(extract_sheet_report(PISCOFINS_XLSX,'APRESENTAÇÃO','Distribuição de Resultado',max_row=51,max_col=60), reports['DRU'])
     DATA_PATH.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
     print('wrote',DATA_PATH)
