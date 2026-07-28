@@ -9,7 +9,7 @@ DATA_PATH = ROOT/'data.json'
 DRU_XLSX = Path('/root/data/abx/entregas/APRESENTACAO/ABX_DRU_RI_Receita_Gerencial_U006_VALIDACAO_V4_AUDITADA.xlsx')
 U006_XLSX = Path('/root/data/abx/entregas/APRESENTACAO/ABX_Receita_Gerencial_U006_1T_2T2026_VALIDACAO.xlsx')
 PISCOFINS_XLSX = Path('/root/data/abx/APURACAO_COFINS_PIS_2T2026_COMPLETA_FORMATADA_SEM_OBS.xlsx')
-RESUMO_XLSX = Path('/root/data/abx/APURACAO_COFINS_PIS_2T2026_COMPLETA_FORMATADA_SEM_OBS_COM_RESUMO_VALIDACAO_V3.xlsx')
+RESUMO_XLSX = Path('/root/data/abx/APURACAO_COFINS_PIS_2T2026_COMPLETA_FORMATADA_SEM_OBS_COM_RESUMO_VALIDACAO_V4.xlsx')
 
 REF_RE = re.compile(r"(?:(?:'([^']+)'|([A-Za-z0-9_À-ÿ ]+))!)?(\$?[A-Z]{1,3}\$?[0-9]{1,5})(?![A-Za-z0-9_])")
 RANGE_RE = re.compile(r"(?:(?:'([^']+)'|([A-Za-z0-9_À-ÿ ]+))!)?(\$?[A-Z]{1,3}\$?[0-9]{1,5}):(\$?[A-Z]{1,3}\$?[0-9]{1,5})")

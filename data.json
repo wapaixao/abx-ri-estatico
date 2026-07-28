@@ -31172,7 +31172,7 @@
           {
             "v": "Unidade",
             "cs": 1,
-            "rs": 1,
+            "rs": 2,
             "style": {
               "bg": "#173F63",
               "color": "#FFFFFF",
@@ -31180,38 +31180,8 @@
             }
           },
           {
-            "v": "PIS/COFINS 1º Trim",
-            "cs": 1,
-            "rs": 1,
-            "style": {
-              "bg": "#173F63",
-              "color": "#FFFFFF",
-              "bold": true
-            }
-          },
-          {
-            "v": "Lucros Líquido DRU 1º Trim",
-            "cs": 1,
-            "rs": 1,
-            "style": {
-              "bg": "#173F63",
-              "color": "#FFFFFF",
-              "bold": true
-            }
-          },
-          {
-            "v": "Lucros a Distribuir",
-            "cs": 1,
-            "rs": 1,
-            "style": {
-              "bg": "#173F63",
-              "color": "#FFFFFF",
-              "bold": true
-            }
-          },
-          {
-            "v": "Prejuízo a Compensar",
-            "cs": 1,
+            "v": "1º TRIMESTRE",
+            "cs": 4,
             "rs": 1,
             "style": {
               "bg": "#173F63",
@@ -31228,21 +31198,33 @@
             }
           },
           {
-            "v": "PIS/COFINS 2º Trim",
-            "cs": 1,
+            "v": "2º TRIMESTRE",
+            "cs": 4,
             "rs": 1,
             "style": {
               "bg": "#173F63",
               "color": "#FFFFFF",
               "bold": true
             }
-          },
+          }
+        ],
+        [
           {
-            "v": "Lucros / Resultado Líquido DRU 2º Trim",
+            "v": "PIS/COFINS",
             "cs": 1,
             "rs": 1,
             "style": {
-              "bg": "#173F63",
+              "bg": "#1F4E78",
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          },
+          {
+            "v": "Lucros Líquido DRU",
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "bg": "#1F4E78",
               "color": "#FFFFFF",
               "bold": true
             }
@@ -31252,7 +31234,7 @@
             "cs": 1,
             "rs": 1,
             "style": {
-              "bg": "#173F63",
+              "bg": "#1F4E78",
               "color": "#FFFFFF",
               "bold": true
             }
@@ -31262,7 +31244,55 @@
             "cs": 1,
             "rs": 1,
             "style": {
-              "bg": "#173F63",
+              "bg": "#1F4E78",
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          },
+          {
+            "v": "",
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "bg": "#FFFFFF"
+            }
+          },
+          {
+            "v": "PIS/COFINS",
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "bg": "#1F4E78",
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          },
+          {
+            "v": "Lucros Líquido DRU",
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "bg": "#1F4E78",
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          },
+          {
+            "v": "Lucros a Distribuir",
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "bg": "#1F4E78",
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          },
+          {
+            "v": "Prejuízo a Compensar",
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "bg": "#1F4E78",
               "color": "#FFFFFF",
               "bold": true
             }
