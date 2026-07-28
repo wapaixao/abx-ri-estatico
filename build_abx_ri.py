@@ -180,13 +180,61 @@ def extract_sheet_report(path, sheet, label, max_row=None, max_col=None):
             rows.append(row)
     return {'label':label,'type':'sheet','rows':rows}
 
+def extract_piscofins_control():
+    eb=EvalBook(PISCOFINS_XLSX); ws=eb.wb['Cofins e Pis']
+    block_rows=[2,11,20,29]
+    periods=[]; units=[]; rows_by_desc={}; desc_order=[]
+    for br in block_rows:
+        period=str(ws.cell(br,1).value or '').strip()
+        if not period: continue
+        periods.append(period)
+        local_units=[]
+        for c in range(2, ws.max_column+1):
+            name=str(ws.cell(br,c).value or '').strip()
+            if not name: continue
+            local_units.append((name,c))
+            if name not in units: units.append(name)
+        for rr in range(br+1, br+6):
+            desc=str(ws.cell(rr,1).value or '').strip()
+            if not desc: continue
+            if desc not in rows_by_desc:
+                rows_by_desc[desc]={}; desc_order.append(desc)
+            for u in units:
+                rows_by_desc[desc].setdefault(u,{})
+                for p in periods: rows_by_desc[desc][u].setdefault(p,0)
+            for name,c in local_units:
+                rows_by_desc[desc][name][period]=cell_value(eb,'Cofins e Pis',rr,c) or 0
+    companies=[{'name':u,'code':u.split(' - ')[0]} for u in units]
+    outrows=[]
+    for desc in desc_order:
+        nivel=1 if desc.upper()=='TOTAL' else 2
+        outrows.append({'descricao':desc,'nivel':nivel,'empresas':rows_by_desc[desc]})
+    return {'label':'PIS / COFINS','type':'unit_period_control','periods':periods,'companies':companies,'rows':outrows}
+
+def apply_2026_negative_previous_rule(report):
+    # For Distribuição 2026 blocks only, move negative Resultado to Negativo Anterior.
+    for ridx,row in enumerate(report['rows']):
+        for i,cell in enumerate(row):
+            v=cell.get('v')
+            if isinstance(v,str) and '2026' in v:
+                try:
+                    resultado=report['rows'][ridx+1][i+1]['v']
+                    neg_cell=report['rows'][ridx+2][i+1]
+                    liq_cell=report['rows'][ridx+3][i+1]
+                except Exception:
+                    continue
+                if isinstance(resultado,(int,float)) and resultado < 0:
+                    neg_cell['v']=resultado
+                    liq_cell['v']=resultado
+    return report
+
 def main():
     data=json.loads(DATA_PATH.read_text())
     reports=data.setdefault('reports',{})
     reports['DRU']=extract_dru()
     reports['U006']=extract_sheet_report(U006_XLSX,'Receita Gerencial U006','Receita Gerencial U006',max_row=11,max_col=76)
-    reports['PISCOFINS']=extract_sheet_report(PISCOFINS_XLSX,'Cofins e Pis','PIS / COFINS',max_row=34,max_col=21)
-    reports['DISTRIB']=extract_sheet_report(PISCOFINS_XLSX,'APRESENTAÇÃO','Distribuição de Resultado',max_row=51,max_col=60)
+    reports['PISCOFINS']=extract_piscofins_control()
+    reports['DISTRIB']=apply_2026_negative_previous_rule(extract_sheet_report(PISCOFINS_XLSX,'APRESENTAÇÃO','Distribuição de Resultado',max_row=51,max_col=60))
     DATA_PATH.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
     print('wrote',DATA_PATH)
     print('reports',list(reports.keys()))
