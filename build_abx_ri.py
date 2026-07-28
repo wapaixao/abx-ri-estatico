@@ -96,7 +96,12 @@ def clean_num(v):
 def cell_value(eb, sheet, r, c):
     v=eb.wb[sheet].cell(r,c).value
     if isinstance(v,str) and v.startswith('='):
-        v=eb.val(sheet, f'{get_column_letter(c)}{r}')
+        formula=v[1:].strip()
+        m=REF_RE.fullmatch(formula)
+        if m:
+            v=eb.val(m.group(1) or m.group(2) or sheet, m.group(3))
+        else:
+            v=eb.val(sheet, f'{get_column_letter(c)}{r}')
     return clean_num(v)
 
 def extract_dru():
@@ -228,13 +233,57 @@ def apply_2026_negative_previous_rule(report):
                     liq_cell['v']=resultado
     return report
 
+def unit_code_from_label(label):
+    s=str(label or '')
+    m=re.search(r'(\d{3})', s)
+    return m.group(1) if m else None
+
+def apply_dru_lucro_to_distrib(report, dru_report):
+    """For 2026 distribution blocks, use DRU Lucro Líquido as Resultado/Lucro source."""
+    lucro_rows=[r for r in dru_report['rows'] if str(r.get('descricao','')).strip().upper()=='LUCRO LIQUIDO']
+    if not lucro_rows: return report
+    lucro=lucro_rows[0]['empresas']
+    dru_by_code={unit_code_from_label(name): vals for name, vals in lucro.items() if unit_code_from_label(name) and not str(name).upper().startswith('TOTAL')}
+    header_units=[c.get('v') for c in report['rows'][0] if unit_code_from_label(c.get('v'))]
+    periods={'1º TRIM 2026':'1T26','2º TRIM 2026':'2T26'}
+    for ridx,row in enumerate(report['rows']):
+        vals=[c.get('v') for c in row]
+        period_label=next((v for v in vals if isinstance(v,str) and v in periods), None)
+        if not period_label: continue
+        period=periods[period_label]
+        result_label_positions=[i for i,c in enumerate(report['rows'][ridx+1]) if str(c.get('v')).strip().upper()=='RESULTADO']
+        partner_label_positions=[i for i,c in enumerate(report['rows'][ridx+4]) if str(c.get('v')).strip().upper()=='PARCEIRO'] if ridx+4 < len(report['rows']) else []
+        for idx,label_pos in enumerate(result_label_positions):
+            if idx >= len(header_units): break
+            code=unit_code_from_label(header_units[idx])
+            val=float(dru_by_code.get(code,{}).get(period,0) or 0)
+            value_pos=label_pos+1
+            if value_pos < len(report['rows'][ridx+1]):
+                report['rows'][ridx+1][value_pos]['v']=val if val>0 else 0
+            if value_pos < len(report['rows'][ridx+2]):
+                report['rows'][ridx+2][value_pos]['v']=val if val<0 else 0
+            if value_pos < len(report['rows'][ridx+3]):
+                report['rows'][ridx+3][value_pos]['v']=val
+            # Distribution values: only distribute positive Resultado Líquido.
+            if idx < len(partner_label_positions):
+                ppos=partner_label_positions[idx]
+                for pr in range(ridx+5, min(ridx+10, len(report['rows']))):
+                    if ppos+2 >= len(report['rows'][pr]): continue
+                    pct=report['rows'][pr][ppos+1].get('v')
+                    partner=report['rows'][pr][ppos].get('v')
+                    if partner in ['', None] or not isinstance(pct,(int,float)):
+                        if report['rows'][pr][ppos+2].get('v') not in ['', None]: report['rows'][pr][ppos+2]['v']=''
+                        continue
+                    report['rows'][pr][ppos+2]['v']=(val*pct/100) if val>0 else 0
+    return report
+
 def main():
     data=json.loads(DATA_PATH.read_text())
     reports=data.setdefault('reports',{})
     reports['DRU']=extract_dru()
     reports['U006']=extract_sheet_report(U006_XLSX,'Receita Gerencial U006','Receita Gerencial U006',max_row=11,max_col=76)
     reports['PISCOFINS']=extract_piscofins_control()
-    reports['DISTRIB']=apply_2026_negative_previous_rule(extract_sheet_report(PISCOFINS_XLSX,'APRESENTAÇÃO','Distribuição de Resultado',max_row=51,max_col=60))
+    reports['DISTRIB']=apply_dru_lucro_to_distrib(extract_sheet_report(PISCOFINS_XLSX,'APRESENTAÇÃO','Distribuição de Resultado',max_row=51,max_col=60), reports['DRU'])
     DATA_PATH.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
     print('wrote',DATA_PATH)
     print('reports',list(reports.keys()))
