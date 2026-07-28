@@ -240,7 +240,11 @@ def unit_code_from_label(label):
 
 def apply_dru_lucro_to_distrib(report, dru_report):
     """For 2026 distribution blocks, use DRU Lucro Líquido as Resultado/Lucro source."""
-    lucro_rows=[r for r in dru_report['rows'] if str(r.get('descricao','')).strip().upper()=='LUCRO LIQUIDO']
+    # Wagner validou que, para Lucros/Distribuição 2026, a base correta é a última linha
+    # apresentada do DRU: LUCRO LÍQUIDO GERENCIAL, já considerando os ajustes da U006.
+    lucro_rows=[r for r in dru_report['rows'] if str(r.get('descricao','')).strip().upper()=='LUCRO LÍQUIDO GERENCIAL']
+    if not lucro_rows:
+        lucro_rows=[r for r in dru_report['rows'] if str(r.get('descricao','')).strip().upper()=='LUCRO LIQUIDO']
     if not lucro_rows: return report
     lucro=lucro_rows[0]['empresas']
     dru_by_code={unit_code_from_label(name): vals for name, vals in lucro.items() if unit_code_from_label(name) and not str(name).upper().startswith('TOTAL')}
