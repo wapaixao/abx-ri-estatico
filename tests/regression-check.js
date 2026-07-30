@@ -18,9 +18,8 @@ function makeEl() {
 
 function loadDashboard() {
   const html = fs.readFileSync('index.html', 'utf8');
-  const match = html.match(/<script>([\s\S]*)<\/script>/);
-  assert(match, 'index.html precisa conter script principal');
-  const js = match[1].replace(/loadData\(\);\s*$/, '');
+  assert(html.includes('src/app.js'), 'index.html deve carregar src/app.js');
+  const js = fs.readFileSync('src/app.js', 'utf8').replace(/loadData\(\);\s*$/, '');
   const elems = {
     tables: makeEl(), cards: makeEl(), modeSelect: makeEl(), selectorTitle: makeEl(),
     periodSelectors: makeEl(), companySelectors: makeEl(), allBtn: makeEl(),
@@ -45,15 +44,15 @@ function loadDashboard() {
   vm.runInContext(js, sandbox);
   const data = fs.readFileSync('data.json', 'utf8');
   vm.runInContext(`DATA=${data};`, sandbox);
-  return { sandbox, elems, html };
+  return { sandbox, elems, html, js };
 }
 
 function run() {
-  const { sandbox, elems, html } = loadDashboard();
+  const { sandbox, elems, html, js } = loadDashboard();
 
   assert(html.includes('styles/app.css'), 'CSS externo deve estar linkado');
-  assert(html.includes('loadData(attempt=1)'), 'data.json deve carregar via loadData com retry');
-  assert(html.includes("d==='Ajuste / Reclassificação PL'"), 'PL pendente deve continuar oculto');
+  assert(js.includes('loadData(attempt=1)'), 'data.json deve carregar via loadData com retry');
+  assert(js.includes("d==='Ajuste / Reclassificação PL'"), 'PL pendente deve continuar oculto');
 
   vm.runInContext('reportType="DRU"; initSelection(); renderSelectors(); render();', sandbox);
   assert(elems.cards.innerHTML.includes('1T26 + 2T26'), 'DRU cards devem somar 1T26 + 2T26 quando ambos selecionados');
