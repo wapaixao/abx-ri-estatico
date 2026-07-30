@@ -70,41 +70,42 @@ abx-ri-estatico/
 
 ### Fase 2 — Extrair CSS sem mudar visual
 
-1. Criar pasta `styles/`.
-2. Separar CSS por domínio:
-   - `base.css`
-   - `toolbar.css`
-   - `tables.css`
-   - `bp.css`
-   - `resumo.css`
-   - `lucros.css`
-   - `u006.css`
-   - `org.css`
-   - `auth.css`
-3. Atualizar `index.html` para carregar os CSS separados.
-4. Validar que todos os marcadores visuais críticos permanecem.
-5. Commit: `refactor: separa estilos do dashboard ABX`.
+Status: **concluída parcialmente e validada**.
+
+1. Criada pasta `styles/`.
+2. CSS inline extraído mecanicamente para `styles/app.css`.
+3. `index.html` passou a carregar `styles/app.css?v=clean1`.
+4. Regressões locais passaram após a extração.
+5. Commit: `3099446 — Refatora CSS para arquivo externo`.
+
+Observação: a separação fina por domínio (`base.css`, `toolbar.css`, `resumo.css`, etc.) fica para uma próxima etapa, depois que a extração mecânica estiver estável.
 
 ### Fase 3 — Extrair JS sem mudar comportamento
 
-1. Criar pasta `src/`.
-2. Separar estado, formatação, seletores, regras e renderizadores.
-3. Preservar nomes de funções críticas durante a primeira extração quando possível.
-4. Atualizar `index.html` para carregar scripts com `defer`.
-5. Commit: `refactor: modulariza javascript do dashboard ABX`.
+Status: **concluída parcialmente e validada**.
+
+1. Criada pasta `src/`.
+2. JavaScript inline extraído mecanicamente para `src/app.js`.
+3. `index.html` passou a carregar `src/app.js?v=clean1` com `defer`.
+4. Regressões locais passaram após a extração.
+5. Commit: `265a57b — Refatora JS para arquivo externo`.
+
+Observação: a separação fina por estado, regras e renderizadores fica para a próxima etapa. Primeiro foi feita a extração segura, mantendo equivalência funcional.
 
 ### Fase 4 — Criar testes de regressão
 
-1. Criar `tests/regression-check.js`.
-2. Testar carregamento de `data.json`.
-3. Testar regras críticas:
+Status: **concluída e validada**.
+
+1. Criado `tests/regression-check.js`.
+2. Testado carregamento estrutural de `data.json`.
+3. Testadas regras críticas:
    - PL oculto;
    - DRU cards somando períodos;
    - U006 A-B;
    - Resumo Tudo/PIS/Lucros/Participações;
    - Lucros unidade 007 compensando prejuízo;
    - ordenação de sócios preservando linha inteira.
-4. Commit: `test: adiciona regressao ABX RI`.
+4. Commit: `e507c1a — Adiciona teste de regressao ABX RI`.
 
 ### Fase 5 — Limpar HTML
 
