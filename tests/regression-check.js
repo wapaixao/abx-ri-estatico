@@ -18,8 +18,9 @@ function makeEl() {
 
 function loadDashboard() {
   const html = fs.readFileSync('index.html', 'utf8');
-  assert(html.includes('src/app.js'), 'index.html deve carregar src/app.js');
-  const js = fs.readFileSync('src/app.js', 'utf8').replace(/loadData\(\);\s*$/, '');
+  const scriptSrcs = [...html.matchAll(/<script src="([^"]+)" defer><\/script>/g)].map(m => m[1].split('?')[0]);
+  assert(scriptSrcs.length >= 5, 'index.html deve carregar scripts externos ordenados');
+  const js = scriptSrcs.map(src => fs.readFileSync(src, 'utf8')).join('\n').replace(/loadData\(\);\s*$/, '');
   const elems = {
     tables: makeEl(), cards: makeEl(), modeSelect: makeEl(), selectorTitle: makeEl(),
     periodSelectors: makeEl(), companySelectors: makeEl(), allBtn: makeEl(),
