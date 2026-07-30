@@ -78,7 +78,23 @@ Status: **concluída parcialmente e validada**.
 4. Regressões locais passaram após a extração.
 5. Commit: `3099446 — Refatora CSS para arquivo externo`.
 
-Observação: a separação fina por domínio (`base.css`, `toolbar.css`, `resumo.css`, etc.) fica para uma próxima etapa, depois que a extração mecânica estiver estável.
+Separação fina concluída depois da extração mecânica:
+
+- `styles/base.css`
+- `styles/toolbar.css`
+- `styles/cards.css`
+- `styles/tables.css`
+- `styles/piscofins.css`
+- `styles/u006.css`
+- `styles/lucros-org.css`
+- `styles/layout-overrides.css`
+- `styles/resumo.css`
+- `styles/responsive.css`
+
+Commits:
+
+- `7a197b6 — Refatora estilos por dominio`.
+- `d76d615 — Preserva ordem visual dos estilos`.
 
 ### Fase 3 — Extrair JS sem mudar comportamento
 
@@ -90,7 +106,26 @@ Status: **concluída parcialmente e validada**.
 4. Regressões locais passaram após a extração.
 5. Commit: `265a57b — Refatora JS para arquivo externo`.
 
-Observação: a separação fina por estado, regras e renderizadores fica para a próxima etapa. Primeiro foi feita a extração segura, mantendo equivalência funcional.
+Separação fina concluída depois da extração mecânica:
+
+- `src/state.js`
+- `src/utils.js`
+- `src/auth.js`
+- `src/participacoes.js`
+- `src/report-helpers.js`
+- `src/selection.js`
+- `src/selectors.js`
+- `src/cards.js`
+- `src/matrix.js`
+- `src/lucros.js`
+- `src/resumo.js`
+- `src/sheet.js`
+- `src/organograma.js`
+- `src/boot.js`
+
+Commit:
+
+- `94dedf1 — Refatora JavaScript por dominio`.
 
 ### Fase 4 — Criar testes de regressão
 
