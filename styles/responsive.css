@@ -1,0 +1,1 @@
+@media(max-width:1250px){.toolbar{grid-template-columns:1fr}.toolbar>.field:first-child,.company-field,.actions{grid-column:1/-1}.table-wrap{max-height:none}.report-buttons{justify-content:center}}
