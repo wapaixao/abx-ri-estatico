@@ -7,8 +7,8 @@
 .report-PL .sheet-table tr:nth-child(2) td,.report-PL .sheet-table tr:nth-child(3) td,.report-PL .sheet-table tr:nth-child(4) td{font-size:13px;color:var(--ink)!important}
 .report-PL .sheet-table tr:nth-child(6) td{background:var(--green2)!important;color:var(--blue2)!important;text-align:left}
 .report-PL .sheet-table tr:nth-child(7) td{background:var(--blue)!important;color:#fff!important;text-align:center}
+.report-PL .sheet-table tr:nth-child(15) td{background:#fff!important;height:12px;border-left:0;border-right:0}
+.report-PL .sheet-table tr:nth-child(16) td{background:var(--green2)!important;color:var(--blue2)!important}
 .report-PL .sheet-table tr:nth-child(17) td{background:#fff!important;height:12px;border-left:0;border-right:0}
-.report-PL .sheet-table tr:nth-child(18) td{background:var(--green2)!important;color:var(--blue2)!important}
-.report-PL .sheet-table tr:nth-child(19) td{background:#fff!important;height:12px;border-left:0;border-right:0}
-.report-PL .sheet-table tr:nth-child(20) td{background:var(--yellow)!important;color:var(--blue2)!important}
+.report-PL .sheet-table tr:nth-child(18) td{background:var(--yellow)!important;color:var(--blue2)!important}
 .report-PL .sheet-note{font-weight:400;color:var(--blue2)}
