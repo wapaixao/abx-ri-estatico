@@ -33203,6 +33203,16 @@
         ],
         [
           {
+            "v": "Valor em processo de distribuição mensal, no montante de R$ 200.000,00 por mês, até a quitação integral do saldo previsto.",
+            "cs": 3,
+            "rs": 1,
+            "style": {
+              "color": "#B42318"
+            }
+          }
+        ],
+        [
+          {
             "v": "Devedores duvidosos — provisão",
             "cs": 1,
             "rs": 1,
@@ -33219,6 +33229,16 @@
           {
             "v": 1900000,
             "cs": 1,
+            "rs": 1,
+            "style": {
+              "color": "#B42318"
+            }
+          }
+        ],
+        [
+          {
+            "v": "Valor registrado como provisão para créditos de liquidação duvidosa, sujeito à confirmação/realização futura.",
+            "cs": 3,
             "rs": 1,
             "style": {
               "color": "#B42318"

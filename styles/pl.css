@@ -11,4 +11,5 @@
 .report-PL .sheet-table tr:nth-child(16) td{background:var(--green2)!important;color:var(--blue2)!important}
 .report-PL .sheet-table tr:nth-child(17) td{background:#fff!important;height:12px;border-left:0;border-right:0}
 .report-PL .sheet-table tr:nth-child(18) td{background:var(--yellow)!important;color:var(--blue2)!important}
+.report-PL .sheet-table tr:nth-child(20) td,.report-PL .sheet-table tr:nth-child(22) td{font-size:12px;white-space:normal;text-align:left;color:var(--red)!important;background:#fff!important}
 .report-PL .sheet-note{font-weight:400;color:var(--blue2)}
