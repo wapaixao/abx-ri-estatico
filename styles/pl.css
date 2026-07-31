@@ -1,0 +1,14 @@
+.report-PL .table-wrap{max-height:calc(100vh - 190px)}
+.report-PL .sheet-table{min-width:620px;max-width:980px;font-size:12.5px;border-collapse:collapse;border:1px solid var(--line)}
+.report-PL .sheet-table td{height:25px;padding:4px 7px;border:1px solid var(--line);vertical-align:middle;background:#fff;font-weight:400!important}
+.report-PL .sheet-table td:first-child{min-width:255px;text-align:left;white-space:normal}
+.report-PL .sheet-table td:nth-child(2),.report-PL .sheet-table td:nth-child(3){min-width:145px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.report-PL .sheet-table tr:nth-child(1) td{background:var(--blue)!important;color:#fff!important;text-align:center}
+.report-PL .sheet-table tr:nth-child(2) td,.report-PL .sheet-table tr:nth-child(3) td,.report-PL .sheet-table tr:nth-child(4) td{font-size:13px;color:var(--ink)!important}
+.report-PL .sheet-table tr:nth-child(6) td{background:var(--green2)!important;color:var(--blue2)!important;text-align:left}
+.report-PL .sheet-table tr:nth-child(7) td{background:var(--blue)!important;color:#fff!important;text-align:center}
+.report-PL .sheet-table tr:nth-child(17) td{background:#fff!important;height:12px;border-left:0;border-right:0}
+.report-PL .sheet-table tr:nth-child(18) td{background:var(--green2)!important;color:var(--blue2)!important}
+.report-PL .sheet-table tr:nth-child(19) td{background:#fff!important;height:12px;border-left:0;border-right:0}
+.report-PL .sheet-table tr:nth-child(20) td{background:var(--yellow)!important;color:var(--blue2)!important}
+.report-PL .sheet-note{font-weight:400;color:var(--blue2)}

@@ -77,6 +77,14 @@ function run() {
   assert(elems.tables.innerHTML.includes('Resumo — Participações por sócio'), 'Resumo Participações deve renderizar sócios');
   assert(elems.tables.innerHTML.includes('Maior Total'), 'Participações deve ter ordenador Maior Total');
 
+  vm.runInContext('reportType="PL"; initSelection(); renderSelectors(); render();', sandbox);
+  assert(elems.tables.innerHTML.includes('Patrimônio Líquido'), 'Aba PL deve renderizar título/linha de PL');
+  assert(elems.tables.innerHTML.includes('9.148.550'), 'Aba PL deve destacar Reserva de Lucros 31/03');
+  assert(elems.tables.innerHTML.includes('10.891.811'), 'Aba PL deve destacar Reserva de Lucros 30/06');
+  assert(elems.tables.innerHTML.includes('31/03/2026'), 'Aba PL deve exibir coluna 31/03/2026');
+  assert(elems.tables.innerHTML.includes('30/06/2026'), 'Aba PL deve exibir coluna 30/06/2026');
+  assert(elems.tables.innerHTML.includes('Devedores duvidosos'), 'Aba PL deve trazer notas explicativas');
+
   vm.runInContext('reportType="DISTRIB"; initSelection(); selectedPeriods=new Set(["2º TRIM 2026"]); selected=new Set(["BELEM - 007"]); render();', sandbox);
   assert(elems.tables.innerHTML.includes('481.461'), 'Lucros 007 2T deve mostrar Resultado 481.461');
   assert(elems.tables.innerHTML.includes('-25.680'), 'Lucros 007 2T deve abater Negativo Anterior -25.680');

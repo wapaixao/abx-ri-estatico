@@ -32844,6 +32844,428 @@
           }
         ]
       ]
+    },
+    "PL": {
+      "label": "Patrimônio Líquido",
+      "type": "sheet",
+      "rows": [
+        [
+          {
+            "v": "Conta / origem",
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "bg": "#1F5F2F",
+              "color": "#FFFFFF"
+            }
+          },
+          {
+            "v": "31/03/2026",
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "bg": "#1F5F2F",
+              "color": "#FFFFFF"
+            }
+          },
+          {
+            "v": "30/06/2026",
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "bg": "#1F5F2F",
+              "color": "#FFFFFF"
+            }
+          }
+        ],
+        [
+          {
+            "v": "Patrimônio Líquido",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 14148550,
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 15891811,
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          }
+        ],
+        [
+          {
+            "v": "Capital Social",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 5000000,
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 5000000,
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          }
+        ],
+        [
+          {
+            "v": "Reserva de Lucros",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 9148550,
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 10891811,
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          }
+        ],
+        [
+          {
+            "v": "",
+            "cs": 3,
+            "rs": 1,
+            "style": {}
+          }
+        ],
+        [
+          {
+            "v": "Composição da Reserva de Lucros",
+            "cs": 3,
+            "rs": 1,
+            "style": {
+              "bg": "#D7E98B"
+            }
+          }
+        ],
+        [
+          {
+            "v": "Conta / origem",
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "bg": "#1F5F2F",
+              "color": "#FFFFFF"
+            }
+          },
+          {
+            "v": "31/03/2026",
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "bg": "#1F5F2F",
+              "color": "#FFFFFF"
+            }
+          },
+          {
+            "v": "30/06/2026",
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "bg": "#1F5F2F",
+              "color": "#FFFFFF"
+            }
+          }
+        ],
+        [
+          {
+            "v": "ABX & M&M Lucros/PIS 2024",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 3554306.47,
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": "",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          }
+        ],
+        [
+          {
+            "v": "Sócios Parceiros",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": "",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": "",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          }
+        ],
+        [
+          {
+            "v": "ABX e M&M (PIS 2025)",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 2826915,
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 2826915,
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          }
+        ],
+        [
+          {
+            "v": "4º Tri 2025 (parceiros)",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": "",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": "",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          }
+        ],
+        [
+          {
+            "v": "Lucros 2025",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": "",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 1785000,
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          }
+        ],
+        [
+          {
+            "v": "Lucro Reserva ICMS",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": "",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 2754320,
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          }
+        ],
+        [
+          {
+            "v": "PIS COFINS 2026",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 1056000,
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 2351262.14,
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          }
+        ],
+        [
+          {
+            "v": "Lucros 2026",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 1321000,
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 1174313.86,
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          }
+        ],
+        [
+          {
+            "v": "Ajustes períodos anteriores",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 390328.53,
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": "",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          }
+        ],
+        [
+          {
+            "v": "",
+            "cs": 3,
+            "rs": 1,
+            "style": {}
+          }
+        ],
+        [
+          {
+            "v": "Total da Reserva de Lucros",
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "bg": "#D7E98B"
+            }
+          },
+          {
+            "v": 9148550,
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "bg": "#D7E98B"
+            }
+          },
+          {
+            "v": 10891811,
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "bg": "#D7E98B"
+            }
+          }
+        ],
+        [
+          {
+            "v": "",
+            "cs": 3,
+            "rs": 1,
+            "style": {}
+          }
+        ],
+        [
+          {
+            "v": "Notas explicativas",
+            "cs": 3,
+            "rs": 1,
+            "style": {
+              "bg": "#FFF7D7"
+            }
+          }
+        ],
+        [
+          {
+            "v": "Distribuição programada",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 3000000,
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "color": "#B42318"
+            }
+          },
+          {
+            "v": 2400000,
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "color": "#B42318"
+            }
+          }
+        ],
+        [
+          {
+            "v": "Devedores duvidosos — provisão",
+            "cs": 1,
+            "rs": 1,
+            "style": {}
+          },
+          {
+            "v": 1900000,
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "color": "#B42318"
+            }
+          },
+          {
+            "v": 1900000,
+            "cs": 1,
+            "rs": 1,
+            "style": {
+              "color": "#B42318"
+            }
+          }
+        ]
+      ]
     }
   }
 }
