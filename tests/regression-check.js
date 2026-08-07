@@ -79,11 +79,16 @@ function run() {
 
   vm.runInContext('reportType="PL"; initSelection(); renderSelectors(); render();', sandbox);
   assert(elems.tables.innerHTML.includes('Patrimônio Líquido'), 'Aba PL deve renderizar título/linha de PL');
-  assert(elems.tables.innerHTML.includes('9.148.550'), 'Aba PL deve destacar Reserva de Lucros 31/03');
-  assert(elems.tables.innerHTML.includes('10.891.811'), 'Aba PL deve destacar Reserva de Lucros 30/06');
-  assert(elems.tables.innerHTML.includes('31/03/2026'), 'Aba PL deve exibir coluna 31/03/2026');
+  assert(elems.tables.innerHTML.includes('10.783.261'), 'Aba PL deve destacar Reserva de Lucros 30/06 corrigida');
+  assert(elems.tables.innerHTML.includes('10.987.631'), 'Aba PL deve destacar Total da Reserva de Lucros 30/06 corrigido');
+  assert(!elems.tables.innerHTML.includes('31/03/2026'), 'Aba PL não deve exibir coluna 31/03/2026');
   assert(elems.tables.innerHTML.includes('30/06/2026'), 'Aba PL deve exibir coluna 30/06/2026');
   assert(elems.tables.innerHTML.includes('Devedores duvidosos'), 'Aba PL deve trazer notas explicativas');
+
+  vm.runInContext('reportType="U006"; initSelection(); renderSelectors(); render();', sandbox);
+  assert(elems.periodSelectors.innerHTML.includes('1T26') && elems.periodSelectors.innerHTML.includes('2T26'), 'Campo Grande deve exibir botões de trimestre');
+  assert(elems.companySelectors.innerHTML.includes('001') && elems.companySelectors.innerHTML.includes('103'), 'Campo Grande deve exibir botões das unidades');
+  assert(elems.tables.innerHTML.includes('001 - Porto') && elems.tables.innerHTML.includes('103 - Top Verde'), 'Campo Grande deve renderizar unidades selecionadas');
 
   vm.runInContext('reportType="DISTRIB"; initSelection(); selectedPeriods=new Set(["2º TRIM 2026"]); selected=new Set(["BELEM - 007"]); render();', sandbox);
   assert(elems.tables.innerHTML.includes('481.461'), 'Lucros 007 2T deve mostrar Resultado 481.461');
