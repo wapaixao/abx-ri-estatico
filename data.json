@@ -15394,33 +15394,9 @@
             "cs": 1,
             "rs": 1,
             "style": {}
-          },
-          {
-            "v": "",
-            "cs": 1,
-            "rs": 1,
-            "style": {}
-          },
-          {
-            "v": "",
-            "cs": 1,
-            "rs": 1,
-            "style": {}
           }
         ],
         [
-          {
-            "v": "",
-            "cs": 1,
-            "rs": 1,
-            "style": {}
-          },
-          {
-            "v": "",
-            "cs": 1,
-            "rs": 1,
-            "style": {}
-          },
           {
             "v": "",
             "cs": 1,
@@ -15791,7 +15767,7 @@
         [
           {
             "v": "Conta",
-            "cs": 2,
+            "cs": 1,
             "rs": 1,
             "style": {
               "bg": "#173F63",
@@ -15801,7 +15777,7 @@
           },
           {
             "v": "Descrição",
-            "cs": 2,
+            "cs": 1,
             "rs": 1,
             "style": {
               "bg": "#173F63",
@@ -16039,29 +16015,11 @@
             }
           },
           {
-            "v": "Jul/26",
-            "cs": 1,
-            "rs": 1,
-            "style": {
-              "bg": "#1F5F2F",
-              "bold": true
-            }
-          },
-          {
             "v": "",
             "cs": 1,
             "rs": 1,
             "style": {
               "bg": "#DDEBF7",
-              "bold": true
-            }
-          },
-          {
-            "v": "Jul/26",
-            "cs": 1,
-            "rs": 1,
-            "style": {
-              "bg": "#1F5F2F",
               "bold": true
             }
           },
@@ -16598,24 +16556,12 @@
             }
           },
           {
-            "v": 0,
-            "cs": 1,
-            "rs": 1,
-            "style": {}
-          },
-          {
             "v": "CF cobrada das unidades — DRU 261008",
             "cs": 1,
             "rs": 1,
             "style": {
               "bold": true
             }
-          },
-          {
-            "v": 0,
-            "cs": 1,
-            "rs": 1,
-            "style": {}
           },
           {
             "v": 502487,
@@ -17056,24 +17002,12 @@
             }
           },
           {
-            "v": 0,
-            "cs": 1,
-            "rs": 1,
-            "style": {}
-          },
-          {
             "v": "Despesa financeira efetiva — DRE",
             "cs": 1,
             "rs": 1,
             "style": {
               "bold": true
             }
-          },
-          {
-            "v": 0,
-            "cs": 1,
-            "rs": 1,
-            "style": {}
           },
           {
             "v": 906,
@@ -17515,25 +17449,7 @@
             }
           },
           {
-            "v": 0,
-            "cs": 1,
-            "rs": 1,
-            "style": {
-              "bg": "#D8EAD1",
-              "bold": true
-            }
-          },
-          {
             "v": "CONTRIBUIÇÃO FINANCEIRA LÍQUIDA",
-            "cs": 1,
-            "rs": 1,
-            "style": {
-              "bg": "#D8EAD1",
-              "bold": true
-            }
-          },
-          {
-            "v": 0,
             "cs": 1,
             "rs": 1,
             "style": {
@@ -18085,12 +18001,6 @@
             }
           },
           {
-            "v": 0,
-            "cs": 1,
-            "rs": 1,
-            "style": {}
-          },
-          {
             "v": "CONTRIBUIÇÃO ADMINISTRATIVA — RECEITA GERENCIAL U006",
             "cs": 1,
             "rs": 1,
@@ -18098,12 +18008,6 @@
               "bg": "#D8EAD1",
               "bold": true
             }
-          },
-          {
-            "v": 0,
-            "cs": 1,
-            "rs": 1,
-            "style": {}
           },
           {
             "v": 167496,
@@ -18595,22 +18499,6 @@
               "bg": "#B9D99E",
               "color": "#102B17",
               "bold": true
-            }
-          },
-          {
-            "v": "",
-            "cs": 1,
-            "rs": 1,
-            "style": {
-              "bg": "#B9D99E"
-            }
-          },
-          {
-            "v": "",
-            "cs": 1,
-            "rs": 1,
-            "style": {
-              "bg": "#B9D99E"
             }
           },
           {

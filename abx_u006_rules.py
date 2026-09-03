@@ -170,6 +170,10 @@ def append_u006_month_from_contrib_workbook(data: dict, workbook_path: str | Pat
     insertions = []
     for b in blocks:
         name = b['name']
+        # Only append period columns to real unit/totalizer blocks. Never append values under
+        # the fixed Conta/Descrição blocks; that creates the visible "0" description shift.
+        if not (name.startswith('TOTAL') or name.startswith('DEMAIS') or (len(name) >= 3 and name[:3].isdigit())):
+            continue
         key = 'GERAL' if name.startswith('TOTAL GERAL') else ('DEMAIS' if name.startswith('DEMAIS') else ('TOTAL' if name.startswith('TOTAL FILIAIS') else name[:3]))
         insertions.append((b['start'] + b['span'], key, name))
 
