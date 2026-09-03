@@ -14238,7 +14238,7 @@
           "codigo": "AJ006FINFIL",
           "secao": "DRE/DRU",
           "nivel": 2,
-          "descricao": "CONTRIBUIÇÃO FINANCEIRA FILIAIS",
+          "descricao": "CONTRIBUIÇÃO FINANCEIRA LÍQUIDA U006",
           "empresas": {
             "001 - Porto Velho": {
               "1T26": 0,
@@ -14266,8 +14266,8 @@
               "Jul/26": 0
             },
             "006 - Campo Grande": {
-              "1T26": 940677,
-              "2T26": 643174,
+              "1T26": 1820931,
+              "2T26": 1492756,
               "Jul/26": 250177
             },
             "007 - Belém": {
@@ -14462,8 +14462,8 @@
               "Jul/26": 0
             },
             "006 - Campo Grande": {
-              "1T26": 762384,
-              "2T26": 542989,
+              "1T26": 1642638,
+              "2T26": 1392571,
               "Jul/26": 575347
             },
             "007 - Belém": {
@@ -14560,8 +14560,8 @@
               "Jul/26": 0
             },
             "006 - Campo Grande": {
-              "1T26": -190596.0,
-              "2T26": -135747.25,
+              "1T26": -410659.5,
+              "2T26": -348142.75,
               "Jul/26": -143836.75
             },
             "007 - Belém": {
@@ -14658,8 +14658,8 @@
               "Jul/26": 0
             },
             "006 - Campo Grande": {
-              "1T26": -68614.56,
-              "2T26": -48869.01,
+              "1T26": -147837.42,
+              "2T26": -125331.39,
               "Jul/26": -51781.23
             },
             "007 - Belém": {
@@ -14756,8 +14756,8 @@
               "Jul/26": 0
             },
             "006 - Campo Grande": {
-              "1T26": 503173.44,
-              "2T26": 358372.74,
+              "1T26": 1084141.08,
+              "2T26": 919096.86,
               "Jul/26": 379729.02
             },
             "007 - Belém": {
@@ -14854,8 +14854,8 @@
               "Jul/26": -7678
             },
             "006 - Campo Grande": {
-              "1T26": 503173.44,
-              "2T26": 358372.74,
+              "1T26": 1084141.08,
+              "2T26": 919096.86,
               "Jul/26": 379729.02
             },
             "007 - Belém": {
@@ -16728,7 +16728,7 @@
             "style": {}
           },
           {
-            "v": 2327129,
+            "v": 3207383,
             "cs": 1,
             "rs": 1,
             "style": {
@@ -16736,7 +16736,7 @@
             }
           },
           {
-            "v": 2531553,
+            "v": 3381135,
             "cs": 1,
             "rs": 1,
             "style": {
@@ -17677,7 +17677,7 @@
             }
           },
           {
-            "v": 940677,
+            "v": 1820931,
             "cs": 1,
             "rs": 1,
             "style": {
@@ -17687,7 +17687,7 @@
             }
           },
           {
-            "v": 643174,
+            "v": 1492756,
             "cs": 1,
             "rs": 1,
             "style": {
@@ -18732,7 +18732,7 @@
             }
           },
           {
-            "v": 1716387,
+            "v": 2596641,
             "cs": 1,
             "rs": 1,
             "style": {
@@ -18742,7 +18742,7 @@
             }
           },
           {
-            "v": 1487024,
+            "v": 2336606,
             "cs": 1,
             "rs": 1,
             "style": {
@@ -19109,7 +19109,7 @@
           }
         ]
       ],
-      "source_update_note": "Regra estrutural U006 aplicada: CF líquida = CF cobrada filiais - despesa financeira efetiva U006 DRE 261001-261006; resultado gerencial = CF líquida + contribuição administrativa."
+      "source_update_note": "Regra estrutural U006 aplicada: CF líquida = CF cobrada de todas as unidades (filiais + demais unidades/Pedras) - despesa financeira efetiva U006 DRE 261001-261006; resultado gerencial = CF líquida + contribuição administrativa das filiais/matriz, sem Demais Empresas/Pedras."
     },
     "PISCOFINS": {
       "label": "PIS / COFINS",
@@ -29464,7 +29464,7 @@
             "style": {}
           },
           {
-            "v": 503173.44,
+            "v": 1084141.08,
             "cs": 2,
             "rs": 1,
             "style": {}
@@ -30036,7 +30036,7 @@
             }
           },
           {
-            "v": 503173.44,
+            "v": 1084141.08,
             "cs": 2,
             "rs": 1,
             "style": {
@@ -30746,7 +30746,7 @@
             "style": {}
           },
           {
-            "v": 452856.096,
+            "v": 975726.9720000001,
             "cs": 1,
             "rs": 1,
             "style": {}
@@ -31108,7 +31108,7 @@
             "style": {}
           },
           {
-            "v": 50317.344000000005,
+            "v": 108414.10800000001,
             "cs": 1,
             "rs": 1,
             "style": {}
@@ -32747,7 +32747,7 @@
             "style": {}
           },
           {
-            "v": 358372.74,
+            "v": 919096.86,
             "cs": 2,
             "rs": 1,
             "style": {}
@@ -33319,7 +33319,7 @@
             }
           },
           {
-            "v": 358372.74,
+            "v": 919096.86,
             "cs": 2,
             "rs": 1,
             "style": {
@@ -34029,7 +34029,7 @@
             "style": {}
           },
           {
-            "v": 322535.46599999996,
+            "v": 827187.1740000001,
             "cs": 1,
             "rs": 1,
             "style": {}
@@ -34391,7 +34391,7 @@
             "style": {}
           },
           {
-            "v": 35837.274,
+            "v": 91909.686,
             "cs": 1,
             "rs": 1,
             "style": {}

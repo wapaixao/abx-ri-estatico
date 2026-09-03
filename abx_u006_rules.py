@@ -201,9 +201,10 @@ def apply_u006_structural_rules(data: dict, audit_path: str | Path | None = None
     """Apply Wagner's permanent U006/Campo Grande managerial rule to all existing periods.
 
     Rule, independent of month/quarter:
-    CF líquida U006 = total CF cobrada das filiais (DRU 261008 / U006 total filiais) -
+    CF líquida U006 = CF cobrada de todas as unidades (filiais + demais unidades/Pedras) -
     despesa financeira efetiva paga pela U006 (DRE 261001-261006).
-    Resultado/incremento gerencial = CF líquida U006 + contribuição administrativa.
+    Resultado/incremento gerencial = CF líquida U006 + contribuição administrativa das unidades
+    administradas pela matriz/filiais, sem Demais Empresas/Pedras.
 
     The audit is written to a separate workbook/file when requested; it is not embedded in
     the partners presentation.
@@ -227,7 +228,10 @@ def apply_u006_structural_rules(data: dict, audit_path: str | Path | None = None
     result_row = ensure_u006_result_row(u006, max_len)
 
     # DRU rows needed in the presentation. Create if missing so future builds don't silently skip.
-    cf_row = ensure_dru_row(dru, 'AJ006FINFIL', 'CONTRIBUIÇÃO FINANCEIRA FILIAIS')
+    old_cf_row = row_by_desc(dru, 'CONTRIBUIÇÃO FINANCEIRA FILIAIS')
+    if old_cf_row:
+        old_cf_row['descricao'] = 'CONTRIBUIÇÃO FINANCEIRA LÍQUIDA U006'
+    cf_row = ensure_dru_row(dru, 'AJ006FINFIL', 'CONTRIBUIÇÃO FINANCEIRA LÍQUIDA U006')
     adm_row = ensure_dru_row(dru, 'AJ006ADM', 'CONTRIBUIÇÃO ADMINISTRATIVA FILIAIS')
     lair_original = row_by_desc(dru, 'LAIR')
     lair_ger = ensure_dru_row(dru, 'AJ006LAIR', 'LAIR GERENCIAL', 1)
@@ -248,20 +252,24 @@ def apply_u006_structural_rules(data: dict, audit_path: str | Path | None = None
         if period not in period_to_filiais_col:
             continue
         f_col = period_to_filiais_col[period]
-        a_total_filiais = n(rows[4][f_col].get('v'))
+        # A vem de todas as unidades cobradas (filiais + demais/Pedras). Se não houver bloco Total Geral
+        # no período, cai com segurança para Total Filiais.
+        a_source_col = period_to_total_col.get(period, f_col)
+        a_total_unidades = n(rows[4][a_source_col].get('v'))
         b_u006 = n(rows[5][u_col].get('v'))
+        # ADM vem só das unidades administradas pela matriz/filiais; Demais/Pedras ficam fora.
         adm_total_filiais = n(rows[7][f_col].get('v'))
-        cf_liquida = a_total_filiais - b_u006
+        cf_liquida = a_total_unidades - b_u006
         incremento = cf_liquida + adm_total_filiais
 
         # U006 grid: show the structural/economic U006 calculation in the Campo Grande column.
-        set_sheet_value(rows, 4, u_col, a_total_filiais)
+        set_sheet_value(rows, 4, u_col, a_total_unidades)
         set_sheet_value(rows, 5, u_col, b_u006)
         set_sheet_value(rows, 6, u_col, cf_liquida, bg='#D8EAD1', bold=True)
         set_sheet_value(rows, 7, u_col, adm_total_filiais)
         set_sheet_value([result_row], 0, u_col, incremento, bg='#B9D99E', bold=True)
         # Total Filiais must close with its own block values (A-B + ADM), not repeat U006's
-        # managerial result. U006 uses B from Campo Grande only; Total Filiais uses B total.
+        # managerial result. U006 uses A from Total Geral and B from Campo Grande only.
         f_a, f_b, f_adm = n(rows[4][f_col].get('v')), n(rows[5][f_col].get('v')), n(rows[7][f_col].get('v'))
         set_sheet_value(rows, 6, f_col, f_a - f_b, bg='#D8EAD1', bold=True)
         set_sheet_value([result_row], 0, f_col, (f_a - f_b) + f_adm, bg='#B9D99E', bold=True)
@@ -293,7 +301,7 @@ def apply_u006_structural_rules(data: dict, audit_path: str | Path | None = None
             ll_ger['empresas'][U006_COMPANY][period] = round(ll_val, 2)
             audit_rows.append({
                 'periodo': period,
-                'cf_cobrada_filiais': round(a_total_filiais),
+                'cf_cobrada_unidades': round(a_total_unidades),
                 'despesa_financeira_u006_dre_261001_261006': round(b_u006),
                 'contrib_financeira_liquida': round(cf_liquida),
                 'contrib_administrativa': round(adm_total_filiais),
@@ -305,7 +313,7 @@ def apply_u006_structural_rules(data: dict, audit_path: str | Path | None = None
                 'lucro_liquido_gerencial': round(ll_val, 2),
             })
 
-    u006['source_update_note'] = 'Regra estrutural U006 aplicada: CF líquida = CF cobrada filiais - despesa financeira efetiva U006 DRE 261001-261006; resultado gerencial = CF líquida + contribuição administrativa.'
+    u006['source_update_note'] = 'Regra estrutural U006 aplicada: CF líquida = CF cobrada de todas as unidades (filiais + demais unidades/Pedras) - despesa financeira efetiva U006 DRE 261001-261006; resultado gerencial = CF líquida + contribuição administrativa das filiais/matriz, sem Demais Empresas/Pedras.'
     dru['source_update_note'] = (dru.get('source_update_note', '') + ' | Regra U006 estrutural aplicada automaticamente para todos os períodos existentes.').strip(' |')
 
     if audit_path:
@@ -320,7 +328,7 @@ def write_u006_audit(audit_rows: list[dict], path: str | Path) -> None:
     ws = wb.active
     ws.title = 'Auditoria U006 oculta'
     headers = [
-        'Período', 'CF cobrada filiais', 'Desp. financeira U006 DRE 261001-261006',
+        'Período', 'CF cobrada unidades', 'Desp. financeira U006 DRE 261001-261006',
         'Contrib. financeira líquida', 'Contrib. administrativa', 'Incremento gerencial',
         'LAIR original', 'LAIR gerencial', 'IRPJ 25%', 'CSLL 9%', 'Lucro líquido gerencial'
     ]
@@ -335,7 +343,7 @@ def write_u006_audit(audit_rows: list[dict], path: str | Path) -> None:
         cell.border = Border(left=thin, right=thin, top=thin, bottom=thin)
     for row in audit_rows:
         ws.append([
-            row['periodo'], row['cf_cobrada_filiais'], row['despesa_financeira_u006_dre_261001_261006'],
+            row['periodo'], row['cf_cobrada_unidades'], row['despesa_financeira_u006_dre_261001_261006'],
             row['contrib_financeira_liquida'], row['contrib_administrativa'], row['incremento_gerencial'],
             row['lair_original'], row['lair_gerencial'], row['irpj_25'], row['csll_9'], row['lucro_liquido_gerencial']
         ])
