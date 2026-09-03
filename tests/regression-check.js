@@ -119,9 +119,9 @@ function run() {
   const csll = findDru('CSLL SOBRE NOVO LAIR (9%)').empresas[u006Name];
   const llGer = findDru('LUCRO LÍQUIDO GERENCIAL').empresas[u006Name];
   const expected = {
-    '1T26': { cf: 1820931, adm: 775710, lairGer: 1642638, llGer: 1084141.08 },
-    '2T26': { cf: 1492756, adm: 843850, lairGer: 1392571, llGer: 919096.86 },
-    'Jul/26': { cf: 250177, adm: 282727, lairGer: 575347, llGer: 379729.02 },
+    '1T26': { cf: 1305283, adm: 775710, lairGer: 1126990, llGer: 743813.40 },
+    '2T26': { cf: 921655, adm: 843850, lairGer: 821470, llGer: 542170.20 },
+    'Jul/26': { cf: 240603, adm: 282727, lairGer: 565773, llGer: 373410.18 },
   };
   for (const [p, e] of Object.entries(expected)) {
     if (!dru.periods.includes(p)) continue;

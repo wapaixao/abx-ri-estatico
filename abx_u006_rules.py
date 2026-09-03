@@ -202,7 +202,7 @@ def apply_u006_structural_rules(data: dict, audit_path: str | Path | None = None
 
     Rule, independent of month/quarter:
     CF líquida U006 = CF cobrada de todas as unidades (filiais + demais unidades/Pedras) -
-    despesa financeira efetiva paga pela U006 (DRE 261001-261006).
+    despesa financeira efetiva de todas as unidades (DRE 261001-261006).
     Resultado/incremento gerencial = CF líquida U006 + contribuição administrativa das unidades
     administradas pela matriz/filiais, sem Demais Empresas/Pedras.
 
@@ -256,20 +256,21 @@ def apply_u006_structural_rules(data: dict, audit_path: str | Path | None = None
         # no período, cai com segurança para Total Filiais.
         a_source_col = period_to_total_col.get(period, f_col)
         a_total_unidades = n(rows[4][a_source_col].get('v'))
-        b_u006 = n(rows[5][u_col].get('v'))
+        b_source_col = period_to_total_col.get(period, u_col)
+        b_total_unidades = n(rows[5][b_source_col].get('v'))
         # ADM vem só das unidades administradas pela matriz/filiais; Demais/Pedras ficam fora.
         adm_total_filiais = n(rows[7][f_col].get('v'))
-        cf_liquida = a_total_unidades - b_u006
+        cf_liquida = a_total_unidades - b_total_unidades
         incremento = cf_liquida + adm_total_filiais
 
         # U006 grid: show the structural/economic U006 calculation in the Campo Grande column.
         set_sheet_value(rows, 4, u_col, a_total_unidades)
-        set_sheet_value(rows, 5, u_col, b_u006)
+        set_sheet_value(rows, 5, u_col, b_total_unidades)
         set_sheet_value(rows, 6, u_col, cf_liquida, bg='#D8EAD1', bold=True)
         set_sheet_value(rows, 7, u_col, adm_total_filiais)
         set_sheet_value([result_row], 0, u_col, incremento, bg='#B9D99E', bold=True)
         # Total Filiais must close with its own block values (A-B + ADM), not repeat U006's
-        # managerial result. U006 uses A from Total Geral and B from Campo Grande only.
+        # managerial result. U006 uses A and B from Total Geral, while ADM excludes Demais/Pedras.
         f_a, f_b, f_adm = n(rows[4][f_col].get('v')), n(rows[5][f_col].get('v')), n(rows[7][f_col].get('v'))
         set_sheet_value(rows, 6, f_col, f_a - f_b, bg='#D8EAD1', bold=True)
         set_sheet_value([result_row], 0, f_col, (f_a - f_b) + f_adm, bg='#B9D99E', bold=True)
@@ -307,7 +308,7 @@ def apply_u006_structural_rules(data: dict, audit_path: str | Path | None = None
             audit_rows.append({
                 'periodo': period,
                 'cf_cobrada_unidades': round(a_total_unidades),
-                'despesa_financeira_u006_dre_261001_261006': round(b_u006),
+                'despesa_financeira_unidades_dre_261001_261006': round(b_total_unidades),
                 'contrib_financeira_liquida': round(cf_liquida),
                 'contrib_administrativa': round(adm_total_filiais),
                 'incremento_gerencial': round(incremento),
@@ -318,7 +319,7 @@ def apply_u006_structural_rules(data: dict, audit_path: str | Path | None = None
                 'lucro_liquido_gerencial': round(ll_val, 2),
             })
 
-    u006['source_update_note'] = 'Regra estrutural U006 aplicada: CF líquida = CF cobrada de todas as unidades (filiais + demais unidades/Pedras) - despesa financeira efetiva U006 DRE 261001-261006; resultado gerencial = CF líquida + contribuição administrativa das filiais/matriz, sem Demais Empresas/Pedras.'
+    u006['source_update_note'] = 'Regra estrutural U006 aplicada: CF líquida = CF cobrada de todas as unidades (filiais + demais unidades/Pedras) - despesa financeira efetiva de todas as unidades DRE 261001-261006; resultado gerencial = CF líquida + contribuição administrativa das filiais/matriz, sem Demais Empresas/Pedras.'
     dru['source_update_note'] = (dru.get('source_update_note', '') + ' | Regra U006 estrutural aplicada automaticamente para todos os períodos existentes.').strip(' |')
 
     if audit_path:
@@ -333,7 +334,7 @@ def write_u006_audit(audit_rows: list[dict], path: str | Path) -> None:
     ws = wb.active
     ws.title = 'Auditoria U006 oculta'
     headers = [
-        'Período', 'CF cobrada unidades', 'Desp. financeira U006 DRE 261001-261006',
+        'Período', 'CF cobrada unidades', 'Desp. financeira unidades DRE 261001-261006',
         'Contrib. financeira líquida', 'Contrib. administrativa', 'Incremento gerencial',
         'LAIR original', 'LAIR gerencial', 'IRPJ 25%', 'CSLL 9%', 'Lucro líquido gerencial'
     ]
@@ -348,7 +349,7 @@ def write_u006_audit(audit_rows: list[dict], path: str | Path) -> None:
         cell.border = Border(left=thin, right=thin, top=thin, bottom=thin)
     for row in audit_rows:
         ws.append([
-            row['periodo'], row['cf_cobrada_unidades'], row['despesa_financeira_u006_dre_261001_261006'],
+            row['periodo'], row['cf_cobrada_unidades'], row['despesa_financeira_unidades_dre_261001_261006'],
             row['contrib_financeira_liquida'], row['contrib_administrativa'], row['incremento_gerencial'],
             row['lair_original'], row['lair_gerencial'], row['irpj_25'], row['csll_9'], row['lucro_liquido_gerencial']
         ])
