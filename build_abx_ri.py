@@ -8,7 +8,7 @@ from abx_u006_rules import apply_u006_structural_rules, append_u006_month_from_c
 ROOT = Path('/root/content/sites/abx-ri-estatico')
 DATA_PATH = ROOT/'data.json'
 DRU_XLSX = Path('/root/data/abx/entregas/APRESENTACAO/ABX_DRU_RI_Receita_Gerencial_U006_VALIDACAO_V5_CF_SPLIT.xlsx')
-U006_XLSX = Path('/root/data/abx/entregas/APRESENTACAO/ABX_Receita_Gerencial_U006_1T_2T2026_VALIDACAO.xlsx')
+U006_XLSX = Path('/root/data/abx/entregas/APRESENTACAO/ABX_Receita_Gerencial_U006_1T_2T2026_VALIDACAO_MATRIZ_CORRIGIDA.xlsx')
 PISCOFINS_XLSX = Path('/root/data/abx/APURACAO_COFINS_PIS_2T2026_COMPLETA_FORMATADA_SEM_OBS.xlsx')
 RESUMO_XLSX = Path('/root/data/abx/APURACAO_COFINS_PIS_2T2026_COMPLETA_FORMATADA_SEM_OBS_COM_RESUMO_VALIDACAO_V4.xlsx')
 MONTHLY_U006_SOURCES = [
