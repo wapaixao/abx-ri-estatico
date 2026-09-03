@@ -282,8 +282,13 @@ def apply_u006_structural_rules(data: dict, audit_path: str | Path | None = None
             set_sheet_value([result_row], 0, d_col, (d_a - d_b) + d_adm, bg='#B9D99E', bold=True)
         if period in period_to_total_col:
             t_col = period_to_total_col[period]
-            t_a, t_b, t_adm = n(rows[4][t_col].get('v')), n(rows[5][t_col].get('v')), n(rows[7][t_col].get('v'))
+            t_a, t_b = n(rows[4][t_col].get('v')), n(rows[5][t_col].get('v'))
+            d_adm = n(rows[7][period_to_demais_col[period]].get('v')) if period in period_to_demais_col else 0
+            # Total Geral must sum the displayed blocks. ADM excludes Demais/Pedras, so it equals
+            # Total Filiais ADM + Demais ADM (normally zero), not the legacy source Total Geral ADM.
+            t_adm = f_adm + d_adm
             set_sheet_value(rows, 6, t_col, t_a - t_b, bg='#D8EAD1', bold=True)
+            set_sheet_value(rows, 7, t_col, t_adm)
             set_sheet_value([result_row], 0, t_col, (t_a - t_b) + t_adm, bg='#B9D99E', bold=True)
 
         if period in dru.get('periods', []) and U006_COMPANY in cf_row.get('empresas', {}):

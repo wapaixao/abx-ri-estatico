@@ -150,6 +150,23 @@ function run() {
           const admv = rows[7][ci]?.v || 0;
           const result = rows[8][ci]?.v || 0;
           assert(Math.abs((ab + admv) - result) <= 1, `${name} ${p} deve fechar Resultado = A-B + ADM`);
+          if (name === 'TOTAL GERAL') {
+            const header = rows[2];
+            let fCol = null, dCol = null, pos = 0;
+            for (const hcell of header) {
+              const hname = String(hcell.v || '').trim();
+              const hspan = hcell.cs || 1;
+              if (hname === 'TOTAL FILIAIS 001 A 011') fCol = pos + off;
+              if (hname === 'DEMAIS EMPRESAS') dCol = pos + off;
+              pos += hspan;
+            }
+            if (fCol !== null && dCol !== null) {
+              const expectedAdm = (rows[7][fCol]?.v || 0) + (rows[7][dCol]?.v || 0);
+              const expectedResult = (rows[8][fCol]?.v || 0) + (rows[8][dCol]?.v || 0);
+              assert(Math.abs(admv - expectedAdm) <= 1, `TOTAL GERAL ADM ${p} deve somar Filiais + Demais`);
+              assert(Math.abs(result - expectedResult) <= 1, `TOTAL GERAL Resultado ${p} deve somar Filiais + Demais`);
+            }
+          }
         }
       }
       col += span;
