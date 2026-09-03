@@ -3,6 +3,7 @@ from pathlib import Path
 from functools import lru_cache
 import openpyxl
 from openpyxl.utils import get_column_letter, column_index_from_string, range_boundaries
+from abx_u006_rules import apply_u006_structural_rules, append_u006_month_from_contrib_workbook
 
 ROOT = Path('/root/content/sites/abx-ri-estatico')
 DATA_PATH = ROOT/'data.json'
@@ -10,6 +11,13 @@ DRU_XLSX = Path('/root/data/abx/entregas/APRESENTACAO/ABX_DRU_RI_Receita_Gerenci
 U006_XLSX = Path('/root/data/abx/entregas/APRESENTACAO/ABX_Receita_Gerencial_U006_1T_2T2026_VALIDACAO.xlsx')
 PISCOFINS_XLSX = Path('/root/data/abx/APURACAO_COFINS_PIS_2T2026_COMPLETA_FORMATADA_SEM_OBS.xlsx')
 RESUMO_XLSX = Path('/root/data/abx/APURACAO_COFINS_PIS_2T2026_COMPLETA_FORMATADA_SEM_OBS_COM_RESUMO_VALIDACAO_V4.xlsx')
+MONTHLY_U006_SOURCES = [
+    {
+        'period': 'Jul/26',
+        'path': Path('/root/data/abx/entregas/APRESENTACAO/ABX_DRE_Apuracoes_Julho_2026_BASE_RI_PREVIA.xlsx'),
+        'sheet': 'Contrib Financeira Jul26',
+    },
+]
 
 REF_RE = re.compile(r"(?:(?:'([^']+)'|([A-Za-z0-9_À-ÿ ]+))!)?(\$?[A-Z]{1,3}\$?[0-9]{1,5})(?![A-Za-z0-9_])")
 RANGE_RE = re.compile(r"(?:(?:'([^']+)'|([A-Za-z0-9_À-ÿ ]+))!)?(\$?[A-Z]{1,3}\$?[0-9]{1,5}):(\$?[A-Z]{1,3}\$?[0-9]{1,5})")
@@ -287,12 +295,21 @@ def main():
     reports=data.setdefault('reports',{})
     reports['DRU']=extract_dru()
     reports['U006']=extract_sheet_report(U006_XLSX,'Receita Gerencial U006','Receita Gerencial U006',max_row=9,max_col=43)
+    monthly_u006 = []
+    for src in MONTHLY_U006_SOURCES:
+        monthly_u006.append(append_u006_month_from_contrib_workbook(data, src['path'], src['period'], src['sheet']))
+    u006_audit = apply_u006_structural_rules(
+        data,
+        ROOT/'audit_hidden'/'AUDITORIA_U006_REGRA_ESTRUTURAL.xlsx'
+    )
     reports['PISCOFINS']=extract_piscofins_control()
     reports['RESUMO']=extract_sheet_report(RESUMO_XLSX,'Resumo','Resumo — PIS/COFINS e Lucros',max_row=20,max_col=10)
     reports['DISTRIB']=apply_dru_lucro_to_distrib(extract_sheet_report(PISCOFINS_XLSX,'APRESENTAÇÃO','Distribuição de Resultado',max_row=51,max_col=60), reports['DRU'])
     DATA_PATH.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
     print('wrote',DATA_PATH)
     print('reports',list(reports.keys()))
+    print('monthly U006 sources', monthly_u006)
+    print('U006 structural audit', u006_audit)
     print('DRU rows',len(reports['DRU']['rows']),'PIS rows',len(reports['PISCOFINS']['rows']),'DISTR rows',len(reports['DISTRIB']['rows']))
 
 if __name__=='__main__': main()

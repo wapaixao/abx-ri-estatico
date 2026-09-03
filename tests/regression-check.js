@@ -98,15 +98,66 @@ function run() {
   const data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
   const rows = data.reports.U006.rows;
   let checked = 0;
-  for (let ci = 2; ci < 40; ci++) {
-    if (!rows[3][ci] || !['1T26', '2T26'].includes(rows[3][ci].v)) continue;
+  for (let ci = 2; ci < rows[3].length; ci++) {
+    if (!rows[3][ci] || !['1T26', '2T26', 'Jul/26'].includes(rows[3][ci].v)) continue;
     const A = rows[4][ci]?.v || 0;
     const B = rows[5][ci]?.v || 0;
     const AB = rows[6][ci]?.v || 0;
     assert(Math.abs((A - B) - AB) <= 1, `U006 A-B não fecha na coluna ${ci}`);
     checked++;
   }
-  assert(checked > 20, 'U006 deve validar múltiplas colunas 1T26/2T26');
+  assert(checked > 20, 'U006 deve validar múltiplas colunas/períodos');
+
+  const dru = data.reports.DRU;
+  const u006Name = '006 - Campo Grande';
+  const findDru = (desc) => dru.rows.find(r => String(r.descricao || '').toUpperCase() === desc);
+  const cf = findDru('CONTRIBUIÇÃO FINANCEIRA FILIAIS').empresas[u006Name];
+  const adm = findDru('CONTRIBUIÇÃO ADMINISTRATIVA FILIAIS').empresas[u006Name];
+  const lair = findDru('LAIR').empresas[u006Name];
+  const lairGer = findDru('LAIR GERENCIAL').empresas[u006Name];
+  const irpj = findDru('IRPJ SOBRE NOVO LAIR (25%)').empresas[u006Name];
+  const csll = findDru('CSLL SOBRE NOVO LAIR (9%)').empresas[u006Name];
+  const llGer = findDru('LUCRO LÍQUIDO GERENCIAL').empresas[u006Name];
+  const expected = {
+    '1T26': { cf: 940677, adm: 775710, lairGer: 762384, llGer: 503173.44 },
+    '2T26': { cf: 643174, adm: 843850, lairGer: 542989, llGer: 358372.74 },
+    'Jul/26': { cf: 250177, adm: 282727, lairGer: 575347, llGer: 379729.02 },
+  };
+  for (const [p, e] of Object.entries(expected)) {
+    if (!dru.periods.includes(p)) continue;
+    assert(Math.abs(cf[p] - e.cf) <= 1, `U006 CF estrutural ${p} incorreta`);
+    assert(Math.abs(adm[p] - e.adm) <= 1, `U006 ADM ${p} incorreta`);
+    assert(Math.abs(lairGer[p] - e.lairGer) <= 1, `U006 LAIR gerencial ${p} incorreto`);
+    assert(Math.abs(irpj[p] - (-lairGer[p] * 0.25)) <= 1, `U006 IRPJ ${p} incorreto`);
+    assert(Math.abs(csll[p] - (-lairGer[p] * 0.09)) <= 1, `U006 CSLL ${p} incorreta`);
+    assert(Math.abs(llGer[p] - e.llGer) <= 1, `U006 Lucro Líquido Gerencial ${p} incorreto`);
+    assert(Math.abs(lairGer[p] - (lair[p] + cf[p] + adm[p])) <= 1, `U006 LAIR gerencial ${p} deve partir do LAIR original + ajustes`);
+  }
+
+  const totalizerNames = ['TOTAL FILIAIS 001 A 011', 'DEMAIS EMPRESAS', 'TOTAL GERAL'];
+  for (const name of totalizerNames) {
+    const header = rows[2];
+    let col = 0;
+    for (const cell of header) {
+      const h = String(cell.v || '').trim();
+      const span = cell.cs || 1;
+      if (h === name) {
+        for (let off = 0; off < span; off++) {
+          const ci = col + off;
+          const p = rows[3][ci]?.v;
+          if (!['1T26', '2T26', 'Jul/26'].includes(p)) continue;
+          const ab = rows[6][ci]?.v || 0;
+          const admv = rows[7][ci]?.v || 0;
+          const result = rows[8][ci]?.v || 0;
+          assert(Math.abs((ab + admv) - result) <= 1, `${name} ${p} deve fechar Resultado = A-B + ADM`);
+        }
+      }
+      col += span;
+    }
+  }
+
+  vm.runInContext('reportType="DRU"; initSelection(); selected=new Set(["006 - Campo Grande"]); selectedPeriods=new Set(["Jul/26"]); renderSelectors(); render();', sandbox);
+  assert(!elems.tables.innerHTML.includes('MATERIAIS PARA OBRA'), 'DRU deve ocultar Materiais para obra quando zerado');
 
   console.log('OK — regressões ABX RI passaram');
 }
