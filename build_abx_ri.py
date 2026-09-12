@@ -1,4 +1,4 @@
-import json, re, math
+import json, re, math, unicodedata
 from pathlib import Path
 from functools import lru_cache
 import openpyxl
@@ -18,6 +18,27 @@ MONTHLY_U006_SOURCES = [
         'sheet': 'Contrib Financeira Jul26',
     },
 ]
+
+DRE_PERIOD_SOURCES = {
+    '1T26': {
+        'months': ['01/26', '02/26', '03/26'],
+        'folder': Path('/root/data/abx/dru_dre_1T2026_recebidos_2026-07-26/raw'),
+        'special_files': {
+            '050': 'DRE 050 - Hortivan.xlsx',
+            '100': 'DRE 100 - Top Frutas.xlsx',
+            '101': 'DRE 101 - Maringa.xlsx',
+            '103': 'DRE 103 - Top Verde.xlsx',
+        },
+    },
+    '2T26': {
+        'months': ['04/26', '05/26', '06/26'],
+        'folder': Path('/root/data/abx/dru_dre_fechado_2T2026/DRE'),
+    },
+    'Jul/26': {
+        'months': ['07/26'],
+        'folder': Path('/root/data/abx/dru_bp_julho_2026_recebidos_2026-08-18/raw'),
+    },
+}
 
 REF_RE = re.compile(r"(?:(?:'([^']+)'|([A-Za-z0-9_À-ÿ ]+))!)?(\$?[A-Z]{1,3}\$?[0-9]{1,5})(?![A-Za-z0-9_])")
 RANGE_RE = re.compile(r"(?:(?:'([^']+)'|([A-Za-z0-9_À-ÿ ]+))!)?(\$?[A-Z]{1,3}\$?[0-9]{1,5}):(\$?[A-Z]{1,3}\$?[0-9]{1,5})")
@@ -149,6 +170,109 @@ def extract_dru():
             nivel=3
         rows.append({'codigo':code,'secao':'DRE/DRU','nivel':nivel,'descricao':desc,'empresas':empresas,'grupo':empresas.get('TOTAL GRUPO',{})})
     return {'label':'Demonstração do Resultado da Unidade (DRU)','periods':periods,'companies':companies,'rows':rows}
+
+def normalized_text(value):
+    text=unicodedata.normalize('NFKD', str(value or ''))
+    text=''.join(ch for ch in text if not unicodedata.combining(ch))
+    return re.sub(r'\s+', ' ', text).strip().upper()
+
+def normalized_account(value):
+    text=str(value or '').strip()
+    return text[:-2] if text.endswith('.0') else text
+
+def finite_number(value):
+    if isinstance(value,(int,float)) and math.isfinite(value): return float(value)
+    return 0.0
+
+def read_dre_period(path, months):
+    """Read one DRE export and deduplicate repeated blocks by account+description+values."""
+    wb=openpyxl.load_workbook(path, data_only=True, read_only=True)
+    ws=wb['Page1'] if 'Page1' in wb.sheetnames else wb[wb.sheetnames[0]]
+    raw=list(ws.iter_rows(values_only=True))
+    header_idx=-1; month_cols={}
+    for idx,row in enumerate(raw[:40]):
+        found={str(v).strip():c for c,v in enumerate(row) if v is not None and str(v).strip() in months}
+        if len(found)>len(month_cols): header_idx=idx; month_cols=found
+    if any(month not in month_cols for month in months):
+        raise ValueError(f'Cabeçalhos mensais ausentes em {path}: esperado {months}, localizado {sorted(month_cols)}')
+    order=[]; display={}; values={}; seen=set()
+    for row in raw[header_idx+1:]:
+        account=normalized_account(row[0] if len(row)>0 else '')
+        description=str(row[2] if len(row)>2 and row[2] is not None else '').strip()
+        if not description: continue
+        key=(account, normalized_text(description))
+        monthly=tuple(finite_number(row[month_cols[m]] if month_cols[m]<len(row) else 0) for m in months)
+        signature=(key,monthly)
+        if signature in seen: continue
+        seen.add(signature)
+        if key not in values:
+            order.append(key); display[key]=description; values[key]=0.0
+        values[key]+=sum(monthly)
+    return order, display, values
+
+def dre_row_sort_key(key, first_seen):
+    account,description=key
+    special={'RECEITA LIQUIDA':0,'RECEITA BRUTA':9,'LUCRO BRUTO':39,'EBITDA':49,'LAIR':69,'LUCRO LIQUIDO':79}
+    if description in special: return (special[description],0,0,first_seen[key])
+    groups={'10':10,'15':20,'20':30,'22':40,'24':50,'26':60,'28':70}
+    group=next((rank for prefix,rank in groups.items() if account.startswith(prefix)),90)
+    level=0 if len(account)<=2 else (1 if len(account)<=4 else 2)
+    numeric=int(account) if account.isdigit() else 999999999
+    return (group,level,numeric,first_seen[key])
+
+def extract_dre(dru_report):
+    periods=list(DRE_PERIOD_SOURCES)
+    real_companies=[c for c in dru_report['companies'] if not str(c['name']).startswith('TOTAL')]
+    companies=real_companies + [
+        {'name':'TOTAL FILIAIS 001-011','code':'TOTAL'},
+        {'name':'TOTAL GRUPO','code':'TOTAL'},
+    ]
+    values_by_company={c['name']:{p:{} for p in periods} for c in real_companies}
+    coverage={c['name']:{p:False for p in periods} for c in real_companies}
+    display={}; first_seen={}; source_files=[]
+    for period,config in DRE_PERIOD_SOURCES.items():
+        for company in real_companies:
+            code=company['code']
+            filename=config.get('special_files',{}).get(code, f'DRE_{code}.xlsx')
+            path=config['folder']/filename
+            if not path.exists(): continue
+            order,local_display,local_values=read_dre_period(path,config['months'])
+            coverage[company['name']][period]=True
+            values_by_company[company['name']][period]=local_values
+            source_files.append({'period':period,'company':company['name'],'file':path.name})
+            for key in order:
+                if key not in first_seen: first_seen[key]=len(first_seen)
+                display.setdefault(key,local_display[key])
+    ordered=sorted(first_seen,key=lambda key:dre_row_sort_key(key,first_seen))
+    rows=[]
+    total_filiais_name='TOTAL FILIAIS 001-011'; total_group_name='TOTAL GRUPO'
+    filial_names=[c['name'] for c in real_companies if c['code'].isdigit() and 1<=int(c['code'])<=11]
+    all_names=[c['name'] for c in real_companies]
+    for key in ordered:
+        account,description_key=key; description=display[key]
+        empresas={}
+        for company in real_companies:
+            empresas[company['name']]={p:clean_num(values_by_company[company['name']][p].get(key,0.0)) for p in periods}
+        empresas[total_filiais_name]={p:clean_num(sum(empresas[n][p] for n in filial_names)) for p in periods}
+        empresas[total_group_name]={p:clean_num(sum(empresas[n][p] for n in all_names)) for p in periods}
+        if description_key in ['RECEITA LIQUIDA','RECEITA BRUTA','LUCRO BRUTO','EBITDA','LAIR','LUCRO LIQUIDO']:
+            nivel=1
+        elif len(account)<=4:
+            nivel=2
+        else:
+            nivel=3
+        rows.append({'codigo':account,'secao':'DRE','nivel':nivel,'descricao':description,'empresas':empresas,'grupo':empresas[total_group_name]})
+    coverage[total_filiais_name]={p:True for p in periods}
+    coverage[total_group_name]={p:True for p in periods}
+    return {
+        'label':'Demonstração do Resultado do Exercício (DRE)',
+        'periods':periods,
+        'companies':companies,
+        'rows':rows,
+        'coverage':coverage,
+        'missing_treatment':'Arquivo DRE não recebido: competência tratada como sem movimento e apresentada de forma opaca.',
+        'sources':source_files,
+    }
 
 def fill_hex(cell):
     fg=cell.fill.fgColor
@@ -294,6 +418,7 @@ def main():
     data=json.loads(DATA_PATH.read_text())
     reports=data.setdefault('reports',{})
     reports['DRU']=extract_dru()
+    reports['DRE']=extract_dre(reports['DRU'])
     reports['U006']=extract_sheet_report(U006_XLSX,'Receita Gerencial U006','Receita Gerencial U006',max_row=9,max_col=43)
     monthly_u006 = []
     for src in MONTHLY_U006_SOURCES:

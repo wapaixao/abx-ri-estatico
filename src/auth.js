@@ -1,3 +1,3 @@
-function bypassAuthForLocalTest(){try{sessionStorage.setItem('abx_ri_auth','ok')}catch(e){}document.body.classList.remove('locked');const auth=document.getElementById('authScreen');if(auth)auth.style.display='none'}
-function unlock(){const input=document.getElementById('passwordInput');bypassAuthForLocalTest();if(input)input.value='';render()}
-function initAuth(){bypassAuthForLocalTest()}
+function unlock(){const input=document.getElementById('passwordInput'),err=document.getElementById('passwordError');if(['ABX2026','ABX-96VSFQGT5J_M'].includes(norm(input.value))){try{sessionStorage.setItem('abx_ri_auth','ok')}catch(e){}document.body.classList.remove('locked');document.getElementById('authScreen').style.display='none';input.value='';render()}else{err.textContent='Senha inválida.';input.select()}}
+function logout(){try{sessionStorage.removeItem('abx_ri_auth')}catch(e){}document.body.classList.add('locked');const auth=document.getElementById('authScreen');if(auth)auth.style.display='flex';const input=document.getElementById('passwordInput');if(input){input.value='';input.focus()}}
+function initAuth(){try{if(sessionStorage.getItem('abx_ri_auth')==='ok'){document.body.classList.remove('locked');document.getElementById('authScreen').style.display='none'}}catch(e){}}

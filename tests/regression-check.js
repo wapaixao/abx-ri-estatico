@@ -44,16 +44,34 @@ function loadDashboard() {
   vm.createContext(sandbox);
   vm.runInContext(js, sandbox);
   const data = fs.readFileSync('data.json', 'utf8');
+  const css = fs.readFileSync('styles/layout-overrides.css', 'utf8');
   vm.runInContext(`DATA=${data};`, sandbox);
-  return { sandbox, elems, html, js };
+  return { sandbox, elems, html, js, css };
 }
 
 function run() {
-  const { sandbox, elems, html, js } = loadDashboard();
+  const { sandbox, elems, html, js, css } = loadDashboard();
 
   assert(html.includes('styles/app.css'), 'CSS externo deve estar linkado');
+  const legacyHtml = fs.readFileSync('abx-ri-2T26.html', 'utf8');
+  assert(!/Senha:\s*ABX/i.test(html + legacyHtml), 'Páginas publicadas não devem exibir dica com a senha');
   assert(js.includes('loadData(attempt=1)'), 'data.json deve carregar via loadData com retry');
   assert(js.includes("d==='Ajuste / Reclassificação PL'"), 'PL pendente deve continuar oculto');
+
+  assert(/id="btn-DRE"(?![^>]*class="disabled")/.test(html), 'Botão DRE deve estar habilitado');
+  assert(css.includes('.report-buttons #btn-DRE{display:inline-flex!important;align-items:center;justify-content:center;text-align:center}'), 'Texto DRE deve estar centralizado no botão');
+  const initialData = JSON.parse(fs.readFileSync('data.json', 'utf8'));
+  assert(initialData.reports.DRE, 'data.json deve conter o relatório DRE');
+  assert(JSON.stringify(initialData.reports.DRE.periods) === JSON.stringify(['1T26', '2T26', 'Jul/26']), 'DRE deve conter 1T26, 2T26 e Jul/26');
+  assert(initialData.reports.DRE.companies.some(c => c.code === '004'), 'DRE deve preservar unidade 004');
+  assert(initialData.reports.DRE.companies.some(c => c.code === '010'), 'DRE deve preservar unidade 010');
+  assert(initialData.reports.DRE.coverage['004 - Rio Paranaíba']['2T26'] === false, 'DRE 004 2T26 deve ser marcado sem movimento');
+  assert(initialData.reports.DRE.coverage['010 - Petrolina']['Jul/26'] === false, 'DRE 010 Jul/26 deve ser marcado sem movimento');
+  assert(initialData.reports.DRE.coverage['050 - Hortivan']['Jul/26'] === false, 'DRE 050 Jul/26 deve ser marcado sem movimento');
+  assert(!JSON.stringify(initialData.reports.DRE.sources).includes('/root/'), 'DRE publicado não deve expor caminhos absolutos do servidor');
+  vm.runInContext('reportType="DRE"; initSelection(); selected=new Set(["004 - Rio Paranaíba"]); selectedPeriods=new Set(["2T26"]); renderSelectors(); render();', sandbox);
+  assert(elems.tables.innerHTML.includes('sem-movimento'), 'DRE deve renderizar coluna opaca de período sem movimento');
+  assert(elems.tables.innerHTML.includes('Sem movimento'), 'DRE deve identificar visualmente período sem movimento');
 
   vm.runInContext('reportType="DRU"; initSelection(); renderSelectors(); render();', sandbox);
   assert(elems.cards.innerHTML.includes('1T26 + 2T26'), 'DRU cards devem somar 1T26 + 2T26 quando ambos selecionados');
@@ -96,6 +114,35 @@ function run() {
   assert(elems.tables.innerHTML.includes('455.781'), 'Lucros 007 2T deve mostrar Resultado Líquido 455.781');
 
   const data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
+
+  const bp = data.reports.BP;
+  const bpSubtotal = bp.rows.find(r => r.descricao === 'Ativo Não Circulante');
+  const bpDetailLabels = [
+    'Aplicações e Seguros Resgatáveis',
+    'Capitalizações',
+    'Renegociações de Longo Prazo',
+    'Créditos de ICMS',
+    'Créditos de PIS e COFINS',
+    'Imobilizado',
+    'Obras / Construções em Bens de Terceiros',
+    'Intangível',
+  ];
+  const bpDetails = bpDetailLabels.map(label => {
+    const row = bp.rows.find(r => r.descricao === label);
+    assert(row, `BP deve conter detalhe do Ativo Não Circulante: ${label}`);
+    return row;
+  });
+  for (const company of bp.companies.filter(c => !String(c.name).startsWith('TOTAL'))) {
+    for (const period of bp.periods) {
+      const detailTotal = bpDetails.reduce((sum, row) => sum + (row.empresas[company.name]?.[period] || 0), 0);
+      const subtotal = bpSubtotal.empresas[company.name]?.[period] || 0;
+      assert(Math.abs(detailTotal - subtotal) <= 1, `Ativo Não Circulante deve fechar para ${company.name} em ${period}`);
+    }
+  }
+  vm.runInContext('reportType="BP"; initSelection(); selected=new Set(["Água Branca matriz/filiais"]); render();', sandbox);
+  assert(elems.tables.innerHTML.includes('Créditos de PIS e COFINS'), 'BP deve renderizar detalhe do Ativo Não Circulante');
+  assert(elems.tables.innerHTML.includes('16.928.587'), 'BP deve manter o subtotal de Ativo Não Circulante de 30/06/2026');
+
   const rows = data.reports.U006.rows;
   let checked = 0;
   for (let ci = 2; ci < rows[3].length; ci++) {
