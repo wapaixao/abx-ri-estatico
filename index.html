@@ -8,7 +8,7 @@
 </head>
 <body class="locked">
   <div class="auth-screen" id="authScreen"><div class="auth-card"><h2>Acesso restrito</h2><p>Digite a senha para visualizar o dashboard.</p><input id="passwordInput" type="password" placeholder="Senha" aria-label="Senha de acesso" onkeydown="if(event.key==='Enter') unlock()"><button type="button" onclick="unlock()">Entrar</button><div class="error" id="passwordError" role="alert"></div></div></div>
-  <header class="hero"><div class="hero-main"><div><h1>ABX / Água Branca — Dashboard RI Estático</h1><p>BP, DRE, DRU, Receita Gerencial U006, PIS/COFINS e Distribuição de Resultado.</p></div><button id="logoutBtn" class="logout-btn" type="button" onclick="logout()">Sair</button></div><div class="release-meta"><span>Dados: Julho/2026 e 2T26</span><span>Atualização: 04/09/2026</span><span>Responsável: Wagner Albuquerque Paixão</span><span>Versão: RI ABX v2026.09</span></div></header>
+  <header class="hero"><div class="hero-main"><div><h1>ABX / Água Branca — Dashboard RI Estático</h1><p>BP, DRE, DRU, Receita Gerencial U006, PIS/COFINS e Distribuição de Resultado.</p></div><button id="logoutBtn" class="logout-btn" type="button" onclick="logout()">Sair</button></div><div class="release-meta"><span>Dados: BP 30/06/2026 · demais módulos até Julho/2026 e 2T26</span><span>Atualização: 14/09/2026</span><span>Responsável: Wagner Albuquerque Paixão</span><span>Versão: RI ABX v2026.09.14 — auditada</span></div></header>
   <main class="wrap">
     <section class="panel active-context" id="activeContext" aria-live="polite">Visualizando: carregando...</section>
     <section class="panel toolbar">
@@ -29,7 +29,7 @@
 <script src="src/report-helpers.js?v=clean3" defer></script>
 <script src="src/selection.js?v=dre1" defer></script>
 <script src="src/selectors.js?v=clean3" defer></script>
-<script src="src/cards.js?v=dre1" defer></script>
+<script src="src/cards.js?v=bp-audit1" defer></script>
 <script src="src/matrix.js?v=dre1" defer></script>
 <script src="src/lucros.js?v=clean3" defer></script>
 <script src="src/resumo.js?v=clean3" defer></script>

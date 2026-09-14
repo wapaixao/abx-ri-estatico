@@ -56,7 +56,7 @@ function run() {
   const legacyHtml = fs.readFileSync('abx-ri-2T26.html', 'utf8');
   assert(!/Senha:\s*ABX/i.test(html + legacyHtml), 'Páginas publicadas não devem exibir dica com a senha');
   assert(js.includes('loadData(attempt=1)'), 'data.json deve carregar via loadData com retry');
-  assert(js.includes("d==='Ajuste / Reclassificação PL'"), 'PL pendente deve continuar oculto');
+  assert(js.includes("adjustment_pl_visibility!=='visible'"), 'Visibilidade do ajuste de PL deve respeitar o status auditado');
 
   assert(/id="btn-DRE"(?![^>]*class="disabled")/.test(html), 'Botão DRE deve estar habilitado');
   assert(css.includes('.report-buttons #btn-DRE{display:inline-flex!important;align-items:center;justify-content:center;text-align:center}'), 'Texto DRE deve estar centralizado no botão');
@@ -142,6 +142,36 @@ function run() {
   vm.runInContext('reportType="BP"; initSelection(); selected=new Set(["Água Branca matriz/filiais"]); render();', sandbox);
   assert(elems.tables.innerHTML.includes('Créditos de PIS e COFINS'), 'BP deve renderizar detalhe do Ativo Não Circulante');
   assert(elems.tables.innerHTML.includes('16.928.587'), 'BP deve manter o subtotal de Ativo Não Circulante de 30/06/2026');
+
+  const bpRow = label => bp.rows.find(r => r.descricao === label);
+  const maringa = 'Água Branca Maringá';
+  const topFrutas = 'Top Morena / Top Frutas';
+  assert(bp.companies.some(c => c.name === maringa && c.code === '101-M'), 'BP deve manter Maringá como unidade 101-M separada');
+  assert(bp.companies.some(c => c.name === topFrutas && c.code === '100'), 'BP deve manter Top Frutas/Top Morena como unidade 100 separada');
+  assert(bpRow('ATIVO').empresas[maringa]['30/06/2026'] === 6073963, 'Maringá deve usar Ativo 30/06 do BPG_2026');
+  assert(bpRow('PATRIMÔNIO LÍQUIDO').empresas[maringa]['30/06/2026'] === -881854, 'Maringá deve usar PL 30/06 do BPG_2026');
+  assert(bpRow('ATIVO').empresas[topFrutas]['30/06/2026'] === 6414951, 'Top Frutas deve usar Ativo 30/06 do BALANCO_2026');
+  assert(bpRow('PATRIMÔNIO LÍQUIDO').empresas[topFrutas]['30/06/2026'] === 1617464, 'Top Frutas deve usar PL 30/06 do BALANCO_2026');
+  const topVerde = 'Top Verde';
+  assert(bpRow('Salários e Contribuições').empresas[topVerde]['31/12/2025'] === 72221, 'Top Verde deve reconhecer Salrios/Salários em 31/12/2025');
+  assert(bpRow('Salários e Contribuições').empresas[topVerde]['31/03/2026'] === 92205, 'Top Verde deve reconhecer Salrios/Salários em 31/03/2026');
+  assert(bpRow('Salários e Contribuições').empresas[topVerde]['30/06/2026'] === 68741, 'Top Verde deve reconhecer Salrios/Salários em 30/06/2026');
+  for (const company of bp.companies.map(c => c.name)) {
+    for (const period of bp.periods) {
+      assert(bpRow('ATIVO').empresas[company][period] === bpRow('PASSIVO TOTAL').empresas[company][period], `BP fonte deve fechar Ativo=Passivo para ${company}, ${period}`);
+    }
+  }
+  for (const period of bp.periods) {
+    assert(bpRow('ATIVO').grupo[period] === bpRow('PASSIVO TOTAL').grupo[period], `BP consolidado deve fechar Ativo=Passivo em ${period}`);
+  }
+  assert(bp.pl_audit_status === 'audited', 'PL deve estar marcado como auditado');
+  assert(bp.pl_audit_date === '14/09/2026', 'PL deve registrar a data da auditoria');
+  assert(bp.adjustment_pl_visibility === 'visible', 'Ajuste / Reclassificação PL deve estar visível após auditoria');
+  assert(bp.source_units[maringa] === 'BPG_2026.xlsx', 'Rastreabilidade de Maringá deve apontar para BPG_2026.xlsx');
+  assert(bp.source_units[topFrutas] === 'BALANCO_2026.xlsx', 'Rastreabilidade de Top Frutas deve apontar para BALANCO_2026.xlsx');
+  assert(bp.source_units[topVerde] === 'BP_103_Top_Verde_2026.xlsx', 'Rastreabilidade de Top Verde deve apontar para a fonte 103');
+  vm.runInContext('reportType="BP"; initSelection(); selectedPeriods=new Set(["30/06/2026"]); render();', sandbox);
+  assert(elems.tables.innerHTML.includes('Ajuste / Reclassificação PL'), 'BP auditado deve renderizar a linha de ajuste/reclassificação do PL');
 
   const rows = data.reports.U006.rows;
   let checked = 0;
