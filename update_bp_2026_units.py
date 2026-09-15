@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Atualiza o BP do RI a partir dos arquivos individuais das unidades 100, 101-M e 103.
+"""Atualiza e valida o BP analítico do RI a partir dos arquivos por empresa.
 
 Mantém a reclassificação gerencial já usada no RI para Créditos Duvidosos:
 move do Ativo Não Circulante para Créditos a Receber/Ativo Circulante.
 A linha Ajuste / Reclassificação PL permanece reconciliada no JSON e sua
 visibilidade acompanha o status de auditoria confirmado para a publicação.
+O Passivo Não Circulante é aberto em componentes-folha, sem dupla contagem.
 """
 from __future__ import annotations
 
@@ -23,6 +24,8 @@ ROOT = Path(__file__).resolve().parent
 DATA = ROOT / "data.json"
 RAW = Path("/root/data/abx/balancos_2026/raw")
 AUDIT = ROOT / "audit_hidden" / "AUDITORIA_BP_UNIDADES_100_101M_103_2026.xlsx"
+AGUA_BRANCA_SOURCE = RAW / "BP_Agua_Branca_25_e_26.xlsx"
+AGUA_BRANCA_COMPANY = "Água Branca matriz/filiais"
 
 
 @dataclass(frozen=True)
@@ -62,6 +65,17 @@ UNITS = (
     ),
 )
 
+HORTIVAN = UnitConfig(
+    source=RAW / "BP_050_Hortvan_2026.xlsx",
+    canonical_source=RAW / "BP_050_Hortvan_2026.xlsx",
+    sheet="BPHV",
+    target_name="HortiVan",
+    expected_identity="HORTIVAN LTDA",
+    public_source_name="BP_050_Hortvan_2026.xlsx",
+)
+
+PNC_UNITS = (HORTIVAN,) + UNITS
+
 PERIODS = ("31/12/2025", "31/03/2026", "30/06/2026")
 PERIOD_COLS = {"31/12/2025": 3, "31/03/2026": 4, "30/06/2026": 5}
 
@@ -90,6 +104,13 @@ def add(*series: dict[str, float]) -> dict[str, float]:
 
 def sub(a: dict[str, float], b: dict[str, float]) -> dict[str, float]:
     return {p: a[p] - b[p] for p in PERIODS}
+
+
+def sum_exact_rows(ws, description: str, start: int, end: int, period_cols: dict[str, int]) -> dict[str, float]:
+    """Soma folhas homônimas dentro de um bloco; ausência inequívoca vira zero."""
+    wanted = norm(description)
+    rows = [row for row in range(start, end + 1) if norm(ws.cell(row, 2).value) == wanted]
+    return add(*(row_values(ws, row, period_cols) for row in rows)) if rows else {p: 0.0 for p in PERIODS}
 
 
 def find_row(ws, description: str, start: int, end: int, *, prefix: bool = False) -> int:
@@ -224,9 +245,90 @@ def extract_unit(cfg: UnitConfig) -> tuple[dict[str, dict[str, float]], dict[str
     return values, meta
 
 
+def extract_pnc_details(cfg: UnitConfig) -> dict[str, dict[str, float]]:
+    """Extrai componentes-folha do Passivo Não Circulante e prova o fechamento."""
+    wb = load_workbook(cfg.source, read_only=True, data_only=True)
+    ws = wb[cfg.sheet]
+    period_cols: dict[str, int] = {}
+    for col in range(3, ws.max_column + 1):
+        value = ws.cell(4, col).value
+        label = value.strftime("%d/%m/%Y") if isinstance(value, datetime) else str(value)
+        if label in PERIODS:
+            period_cols[label] = col
+    if set(period_cols) != set(PERIODS):
+        raise ValueError(f"Períodos do PNC ausentes em {cfg.source.name}: {sorted(period_cols)}")
+
+    passivo_row = find_row(ws, "PASSIVO", 30, ws.max_row)
+    patrimonio_row = find_row(ws, "PATRIMONIO", passivo_row, ws.max_row)
+    pnc_row = find_row(ws, "NAO CIRCULANTE", passivo_row + 1, patrimonio_row - 1)
+    start, end = pnc_row + 1, patrimonio_row - 1
+    total = row_values(ws, pnc_row, period_cols)
+    details = {
+        "Banco do Brasil — Longo Prazo": sum_exact_rows(ws, "BANCO DO BRASIL", start, end, period_cols),
+        "Bradesco — Longo Prazo": sum_exact_rows(ws, "BRADESCO", start, end, period_cols),
+        "Arrendamentos / Leasing — Longo Prazo": sum_exact_rows(ws, "ARRENDAMENTOS LEASING", start, end, period_cols),
+        "Débitos Previdenciários / Tributários — Longo Prazo": sum_exact_rows(ws, "DEBITOS PREVIDENCIARIOS", start, end, period_cols),
+    }
+    known = add(*details.values())
+    details["Outras Obrigações Não Circulantes"] = sub(total, known)
+    for period in PERIODS:
+        closed = sum(series[period] for series in details.values())
+        if abs(closed - total[period]) > 0.01:
+            raise ValueError(f"Detalhes do PNC não fecham em {cfg.target_name}, {period}")
+    return details
+
+
+def extract_agua_branca_source_pl() -> dict[str, float]:
+    """Lê o PL contábil de Água Branca diretamente do BP-fonte.
+
+    O relatório específico de PL contém ajustes gerenciais apartados e não pode
+    alimentar o BP nem a DFC. Esta extração preserva essa separação de escopo.
+    """
+    if not AGUA_BRANCA_SOURCE.exists():
+        raise FileNotFoundError(AGUA_BRANCA_SOURCE)
+    wb = load_workbook(AGUA_BRANCA_SOURCE, read_only=True, data_only=True)
+    ws = wb["Balanco Analitico"]
+    period_cols: dict[str, int] = {}
+    for col in range(1, ws.max_column + 1):
+        value = ws.cell(1, col).value
+        label = value.strftime("%d/%m/%Y") if isinstance(value, datetime) else str(value)
+        if label in PERIODS:
+            period_cols[label] = col
+    if set(period_cols) != set(PERIODS):
+        raise ValueError(f"Períodos do PL ausentes em {AGUA_BRANCA_SOURCE.name}: {sorted(period_cols)}")
+    candidates = [
+        row for row in range(1, ws.max_row + 1)
+        if norm(ws.cell(row, 1).value) == "PATRIMONIO"
+    ]
+    if len(candidates) != 1:
+        raise ValueError(f"Linha do PL de Água Branca não é única: {candidates}")
+    return row_values(ws, candidates[0], period_cols)
+
+
 def update_data(extracted: dict[str, dict[str, dict[str, float]]], metadata: dict[str, dict[str, str]]) -> dict:
     data = json.loads(DATA.read_text(encoding="utf-8"))
     bp = data["reports"]["BP"]
+    pnc_labels = [
+        "Banco do Brasil — Longo Prazo",
+        "Bradesco — Longo Prazo",
+        "Arrendamentos / Leasing — Longo Prazo",
+        "Débitos Previdenciários / Tributários — Longo Prazo",
+        "Outras Obrigações Não Circulantes",
+    ]
+    existing = {row["descricao"] for row in bp["rows"]}
+    insert_at = next(i for i, row in enumerate(bp["rows"]) if row["descricao"] == "PATRIMÔNIO LÍQUIDO")
+    company_names = [c["name"] for c in bp["companies"] if not str(c["name"]).startswith("TOTAL")]
+    for label in reversed(pnc_labels):
+        if label not in existing:
+            empty = {name: {p: 0 for p in bp["periods"]} for name in company_names}
+            bp["rows"].insert(insert_at, {
+                "secao": "PASSIVO",
+                "nivel": 3,
+                "descricao": label,
+                "empresas": empty,
+                "grupo": {p: 0 for p in bp["periods"]},
+            })
+
     rows_by_label: dict[str, list[dict]] = {}
     for row in bp["rows"]:
         rows_by_label.setdefault(row["descricao"], []).append(row)
@@ -248,6 +350,14 @@ def update_data(extracted: dict[str, dict[str, dict[str, float]]], metadata: dic
                 p: int(v) if abs(v - round(v)) < 1e-9 else v for p, v in period_values.items()
             }
 
+    # O BP usa o PL contábil da fonte. O ajuste de R$ 108.550 permanece apenas
+    # no relatório gerencial reports.PL e não participa do BP nem da DFC.
+    source_pl = extract_agua_branca_source_pl()
+    bp_pl_row = rows_by_label["PATRIMÔNIO LÍQUIDO"][0]
+    bp_pl_row.setdefault("empresas", {})[AGUA_BRANCA_COMPANY] = {
+        p: int(v) if abs(v - round(v)) < 1e-9 else v for p, v in source_pl.items()
+    }
+
     # Recalcula o grupo para todas as linhas a partir das cinco empresas exibidas.
     company_names = [c["name"] for c in bp["companies"] if not str(c["name"]).startswith("TOTAL")]
     for row in bp["rows"]:
@@ -261,6 +371,8 @@ def update_data(extracted: dict[str, dict[str, dict[str, float]]], metadata: dic
     bp["pl_audit_status"] = "audited"
     bp["pl_audit_date"] = "14/09/2026"
     bp["adjustment_pl_visibility"] = "visible"
+    bp["basis_note"] = "BP contábil conforme fontes; ajustes gerenciais do relatório específico de PL não integram o BP nem a DFC."
+    data["reports"]["PL"]["scope_note"] = "Relatório gerencial apartado; o ajuste gerencial de R$ 108.550 não integra o BP nem a DFC."
     DATA.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return data
 
@@ -273,6 +385,8 @@ def write_audit(extracted: dict[str, dict[str, dict[str, float]]], metadata: dic
     ws.title = "Validação"
     ws.append(["Unidade", "Arquivo", "Identificação fonte", "Período", "Ativo", "Passivo total", "Diferença", "PL", "Ajuste / Reclassificação PL", "Status"])
     for unit_name, values in extracted.items():
+        if "ATIVO" not in values:
+            continue
         for p in PERIODS:
             ativo = values["ATIVO"][p]
             passivo = values["PASSIVO TOTAL"][p]
@@ -302,6 +416,17 @@ def main() -> None:
         if cfg.source.resolve() != cfg.canonical_source.resolve():
             shutil.copy2(cfg.source, cfg.canonical_source)
 
+    for cfg in PNC_UNITS:
+        details = extract_pnc_details(cfg)
+        if cfg.target_name in extracted:
+            extracted[cfg.target_name].update(details)
+        else:
+            extracted[cfg.target_name] = details
+            metadata[cfg.target_name] = {
+                "identity": cfg.expected_identity,
+                "source": cfg.public_source_name,
+            }
+
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     shutil.copy2(DATA, ROOT / f"data.backup_bp_units_{stamp}.json")
     update_data(extracted, metadata)
@@ -310,8 +435,9 @@ def main() -> None:
     print(f"Atualizado: {DATA}")
     for name in extracted:
         print(f"- {name}: {metadata[name]['source']}")
-        print(f"  Ativo 30/06/2026: {extracted[name]['ATIVO']['30/06/2026']:.0f}")
-        print(f"  PL 30/06/2026: {extracted[name]['PATRIMÔNIO LÍQUIDO']['30/06/2026']:.0f}")
+        if "ATIVO" in extracted[name]:
+            print(f"  Ativo 30/06/2026: {extracted[name]['ATIVO']['30/06/2026']:.0f}")
+            print(f"  PL 30/06/2026: {extracted[name]['PATRIMÔNIO LÍQUIDO']['30/06/2026']:.0f}")
     print(f"Auditoria: {AUDIT}")
     print("PL: auditado em 14/09/2026; Ajuste / Reclassificação PL visível")
 

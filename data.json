@@ -1036,14 +1036,199 @@
           }
         },
         {
+          "secao": "PASSIVO",
+          "nivel": 3,
+          "descricao": "Banco do Brasil — Longo Prazo",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            },
+            "HortiVan": {
+              "31/12/2025": 942857,
+              "31/03/2026": 857142,
+              "30/06/2026": 771428
+            },
+            "Top Morena / Top Frutas": {
+              "31/12/2025": 914285,
+              "31/03/2026": 828571,
+              "30/06/2026": 742857
+            },
+            "Água Branca Maringá": {
+              "31/12/2025": 464285,
+              "31/03/2026": 371428,
+              "30/06/2026": 278571
+            },
+            "Top Verde": {
+              "31/12/2025": 1170479,
+              "31/03/2026": 1045397,
+              "30/06/2026": 920316
+            }
+          },
+          "grupo": {
+            "31/12/2025": 3491906.0,
+            "31/03/2026": 3102538.0,
+            "30/06/2026": 2713172.0
+          }
+        },
+        {
+          "secao": "PASSIVO",
+          "nivel": 3,
+          "descricao": "Bradesco — Longo Prazo",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            },
+            "HortiVan": {
+              "31/12/2025": 2516113,
+              "31/03/2026": 1930026,
+              "30/06/2026": 1794006
+            },
+            "Top Morena / Top Frutas": {
+              "31/12/2025": 90215,
+              "31/03/2026": 82014,
+              "30/06/2026": 73813
+            },
+            "Água Branca Maringá": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            },
+            "Top Verde": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            }
+          },
+          "grupo": {
+            "31/12/2025": 2606328.0,
+            "31/03/2026": 2012040.0,
+            "30/06/2026": 1867819.0
+          }
+        },
+        {
+          "secao": "PASSIVO",
+          "nivel": 3,
+          "descricao": "Arrendamentos / Leasing — Longo Prazo",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            },
+            "HortiVan": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            },
+            "Top Morena / Top Frutas": {
+              "31/12/2025": 1191895,
+              "31/03/2026": 1084356,
+              "30/06/2026": 976818
+            },
+            "Água Branca Maringá": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            },
+            "Top Verde": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            }
+          },
+          "grupo": {
+            "31/12/2025": 1191895.0,
+            "31/03/2026": 1084356.0,
+            "30/06/2026": 976818.0
+          }
+        },
+        {
+          "secao": "PASSIVO",
+          "nivel": 3,
+          "descricao": "Débitos Previdenciários / Tributários — Longo Prazo",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            },
+            "HortiVan": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            },
+            "Top Morena / Top Frutas": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            },
+            "Água Branca Maringá": {
+              "31/12/2025": 40109,
+              "31/03/2026": 36349,
+              "30/06/2026": 32589
+            },
+            "Top Verde": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            }
+          },
+          "grupo": {
+            "31/12/2025": 40109.0,
+            "31/03/2026": 36349.0,
+            "30/06/2026": 32589.0
+          }
+        },
+        {
+          "secao": "PASSIVO",
+          "nivel": 3,
+          "descricao": "Outras Obrigações Não Circulantes",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            },
+            "HortiVan": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            },
+            "Top Morena / Top Frutas": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            },
+            "Água Branca Maringá": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            },
+            "Top Verde": {
+              "31/12/2025": 0,
+              "31/03/2026": 0,
+              "30/06/2026": 0
+            }
+          },
+          "grupo": {
+            "31/12/2025": 0.0,
+            "31/03/2026": 0.0,
+            "30/06/2026": 0.0
+          }
+        },
+        {
           "secao": "PATRIMÔNIO LÍQUIDO",
           "nivel": 1,
           "descricao": "PATRIMÔNIO LÍQUIDO",
           "empresas": {
             "Água Branca matriz/filiais": {
-              "31/12/2025": 14166239.0,
-              "31/03/2026": 17222169.0,
-              "30/06/2026": 15783261.0
+              "31/12/2025": 14166239,
+              "31/03/2026": 17222169,
+              "30/06/2026": 15891811
             },
             "HortiVan": {
               "31/12/2025": 1104065.0,
@@ -1069,7 +1254,7 @@
           "grupo": {
             "31/12/2025": 19332865.0,
             "31/03/2026": 22715004.0,
-            "30/06/2026": 20724170.0
+            "30/06/2026": 20832720.0
           }
         },
         {
@@ -1224,16 +1409,19 @@
       "sources": [
         "BALANCO_2026.xlsx",
         "BPG_2026.xlsx",
-        "BP_103_Top_Verde_2026.xlsx"
+        "BP_103_Top_Verde_2026.xlsx",
+        "BP_050_Hortvan_2026.xlsx"
       ],
       "source_units": {
         "Top Morena / Top Frutas": "BALANCO_2026.xlsx",
         "Água Branca Maringá": "BPG_2026.xlsx",
-        "Top Verde": "BP_103_Top_Verde_2026.xlsx"
+        "Top Verde": "BP_103_Top_Verde_2026.xlsx",
+        "HortiVan": "BP_050_Hortvan_2026.xlsx"
       },
       "pl_audit_status": "audited",
       "adjustment_pl_visibility": "visible",
-      "pl_audit_date": "14/09/2026"
+      "pl_audit_date": "14/09/2026",
+      "basis_note": "BP contábil conforme fontes; ajustes gerenciais do relatório específico de PL não integram o BP nem a DFC."
     },
     "DRU": {
       "label": "Demonstração do Resultado da Unidade (DRU)",
@@ -34958,7 +35146,8 @@
             }
           }
         ]
-      ]
+      ],
+      "scope_note": "Relatório gerencial apartado; o ajuste gerencial de R$ 108.550 não integra o BP nem a DFC."
     },
     "DRE": {
       "label": "Demonstração do Resultado do Exercício (DRE)",
@@ -49916,6 +50105,1398 @@
           "file": "DRE_011.xlsx"
         }
       ]
+    },
+    "DFC": {
+      "label": "DFC — Demonstração dos Fluxos de Caixa (preliminar)",
+      "periods": [
+        "1T26",
+        "2T26"
+      ],
+      "companies": [
+        {
+          "name": "Água Branca matriz/filiais",
+          "logo_asset": "assets/logo_agua_branca.jpg",
+          "code": "ABX"
+        },
+        {
+          "name": "HortiVan",
+          "logo_asset": "assets/logo_050_hortivan.jpg",
+          "code": "050"
+        },
+        {
+          "name": "Top Morena / Top Frutas",
+          "logo_asset": "assets/logo_100_top_morena.jpg",
+          "code": "100"
+        },
+        {
+          "name": "Água Branca Maringá",
+          "logo_asset": "assets/logo_agua_branca.jpg",
+          "badge": "M",
+          "code": "101-M"
+        },
+        {
+          "name": "Top Verde",
+          "logo_asset": "assets/logo_103_top_verde.jpg",
+          "code": "103"
+        }
+      ],
+      "rows": [
+        {
+          "codigo": "FCO",
+          "secao": "DFC",
+          "nivel": 1,
+          "descricao": "Fluxo de caixa das atividades operacionais (FCO)",
+          "natureza": "subtotal",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 2124117.0,
+              "2T26": -2387132.0
+            },
+            "HortiVan": {
+              "1T26": -115708.0,
+              "2T26": -74809.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 63672.0,
+              "2T26": 486893.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 428842.0,
+              "2T26": -1895370.0
+            },
+            "Top Verde": {
+              "1T26": 234161.0,
+              "2T26": 447352.0
+            }
+          },
+          "grupo": {
+            "1T26": 2735084.0,
+            "2T26": -3423066.0
+          }
+        },
+        {
+          "codigo": "LL",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Lucro líquido — DRE",
+          "natureza": "profit",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 2282239.0,
+              "2T26": 2719251.0
+            },
+            "HortiVan": {
+              "1T26": -8292.0,
+              "2T26": -143164.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 120103.0,
+              "2T26": -50921.0
+            },
+            "Água Branca Maringá": {
+              "1T26": -201560.0,
+              "2T26": -150224.0
+            },
+            "Top Verde": {
+              "1T26": 348191.0,
+              "2T26": 463300.0
+            }
+          },
+          "grupo": {
+            "1T26": 2540681.0,
+            "2T26": 2838242.0
+          }
+        },
+        {
+          "codigo": "OA_3",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Redução / (aumento) de estoques",
+          "natureza": "asset_decrease",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": -2071942.0,
+              "2T26": 233008.0
+            },
+            "HortiVan": {
+              "1T26": 96939.0,
+              "2T26": -94055.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": -34862.0,
+              "2T26": 53960.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 10790.0,
+              "2T26": -150809.0
+            },
+            "Top Verde": {
+              "1T26": -129338.0,
+              "2T26": 100676.0
+            }
+          },
+          "grupo": {
+            "1T26": -2128413.0,
+            "2T26": 142780.0
+          }
+        },
+        {
+          "codigo": "OA_4",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Redução / (aumento) de créditos a receber",
+          "natureza": "asset_decrease",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 5626963.0,
+              "2T26": -12388732.0
+            },
+            "HortiVan": {
+              "1T26": 456452.0,
+              "2T26": 1482026.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 162823.0,
+              "2T26": 1034211.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 1013515.0,
+              "2T26": -1144429.0
+            },
+            "Top Verde": {
+              "1T26": -637294.0,
+              "2T26": -420487.0
+            }
+          },
+          "grupo": {
+            "1T26": 6622459.0,
+            "2T26": -11437411.0
+          }
+        },
+        {
+          "codigo": "OA_5",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Redução / (aumento) de recebíveis antecipados",
+          "natureza": "asset_decrease",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": -3933806.0,
+              "2T26": 2036167.0
+            },
+            "HortiVan": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": -3933806.0,
+            "2T26": 2036167.0
+          }
+        },
+        {
+          "codigo": "OA_6",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Redução / (aumento) de adiantamentos e outros ativos",
+          "natureza": "asset_decrease",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": -749329.0,
+              "2T26": 2385199.0
+            },
+            "HortiVan": {
+              "1T26": -188.0,
+              "2T26": -599950.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": -254924.0,
+              "2T26": 285300.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 14118.0,
+              "2T26": 35000.0
+            },
+            "Top Verde": {
+              "1T26": -9760.0,
+              "2T26": -32200.0
+            }
+          },
+          "grupo": {
+            "1T26": -1000083.0,
+            "2T26": 2073349.0
+          }
+        },
+        {
+          "codigo": "OA_10",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Redução / (aumento) de renegociações de longo prazo",
+          "natureza": "asset_decrease",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": -19772.0,
+              "2T26": 30591.0
+            },
+            "HortiVan": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 107539.0,
+              "2T26": 100538.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": 87767.0,
+            "2T26": 131129.0
+          }
+        },
+        {
+          "codigo": "OA_11",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Redução / (aumento) de créditos de ICMS",
+          "natureza": "asset_decrease",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": -59328.0,
+              "2T26": -144821.0
+            },
+            "HortiVan": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 27364.0,
+              "2T26": -8902.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": -31964.0,
+            "2T26": -153723.0
+          }
+        },
+        {
+          "codigo": "OA_12",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Redução / (aumento) de créditos de PIS e COFINS",
+          "natureza": "asset_decrease",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 807589.0,
+              "2T26": -1728940.0
+            },
+            "HortiVan": {
+              "1T26": 193286.0,
+              "2T26": -52619.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 192477.0,
+              "2T26": 3057.0
+            },
+            "Água Branca Maringá": {
+              "1T26": -53251.0,
+              "2T26": -47171.0
+            },
+            "Top Verde": {
+              "1T26": 58711.0,
+              "2T26": -179326.0
+            }
+          },
+          "grupo": {
+            "1T26": 1198812.0,
+            "2T26": -2004999.0
+          }
+        },
+        {
+          "codigo": "OL_18",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Aumento / (redução) de fornecedores",
+          "natureza": "liability_increase",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 260374.0,
+              "2T26": 4214079.0
+            },
+            "HortiVan": {
+              "1T26": -829449.0,
+              "2T26": -645659.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 229805.0,
+              "2T26": -681895.0
+            },
+            "Água Branca Maringá": {
+              "1T26": -367381.0,
+              "2T26": 1582552.0
+            },
+            "Top Verde": {
+              "1T26": 583787.0,
+              "2T26": 520105.0
+            }
+          },
+          "grupo": {
+            "1T26": -122864.0,
+            "2T26": 4989182.0
+          }
+        },
+        {
+          "codigo": "OL_19",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Aumento / (redução) de aluguéis a pagar",
+          "natureza": "liability_increase",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": -2958.0,
+              "2T26": 11919.0
+            },
+            "HortiVan": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Água Branca Maringá": {
+              "1T26": -1345.0,
+              "2T26": 430.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": -4303.0,
+            "2T26": 12349.0
+          }
+        },
+        {
+          "codigo": "OL_20",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Aumento / (redução) de salários e contribuições",
+          "natureza": "liability_increase",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": -132905.0,
+              "2T26": -9159.0
+            },
+            "HortiVan": {
+              "1T26": -17435.0,
+              "2T26": -20356.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 2007.0,
+              "2T26": 7624.0
+            },
+            "Água Branca Maringá": {
+              "1T26": -638.0,
+              "2T26": 953.0
+            },
+            "Top Verde": {
+              "1T26": 19984.0,
+              "2T26": -23464.0
+            }
+          },
+          "grupo": {
+            "1T26": -128987.0,
+            "2T26": -44402.0
+          }
+        },
+        {
+          "codigo": "OL_21",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Aumento / (redução) de impostos a pagar",
+          "natureza": "liability_increase",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 116992.0,
+              "2T26": 254306.0
+            },
+            "HortiVan": {
+              "1T26": -7021.0,
+              "2T26": -1032.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": -11296.0,
+              "2T26": -14981.0
+            },
+            "Água Branca Maringá": {
+              "1T26": -9010.0,
+              "2T26": -9010.0
+            },
+            "Top Verde": {
+              "1T26": -120.0,
+              "2T26": 18748.0
+            }
+          },
+          "grupo": {
+            "1T26": 89545.0,
+            "2T26": 248031.0
+          }
+        },
+        {
+          "codigo": "OL_24",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Aumento / (redução) de adiantamentos passivos",
+          "natureza": "liability_increase",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "HortiVan": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": -450000.0,
+              "2T26": -250000.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 0.0,
+              "2T26": -2000000.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": -450000.0,
+            "2T26": -2250000.0
+          }
+        },
+        {
+          "codigo": "OL_25",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Variação de reclassificações do passivo circulante",
+          "natureza": "liability_increase",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "HortiVan": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": 0.0,
+            "2T26": 0.0
+          }
+        },
+        {
+          "codigo": "OL_30",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Aumento / (redução) de débitos tributários de longo prazo",
+          "natureza": "liability_increase",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "HortiVan": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Água Branca Maringá": {
+              "1T26": -3760.0,
+              "2T26": -3760.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": -3760.0,
+            "2T26": -3760.0
+          }
+        },
+        {
+          "codigo": "FCI",
+          "secao": "DFC",
+          "nivel": 1,
+          "descricao": "Fluxo de caixa das atividades de investimento (FCI)",
+          "natureza": "subtotal",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": -982167.0,
+              "2T26": -527369.0
+            },
+            "HortiVan": {
+              "1T26": -13122.0,
+              "2T26": -27000.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": -120000.0,
+              "2T26": -35399.0
+            },
+            "Água Branca Maringá": {
+              "1T26": -127500.0,
+              "2T26": -2099.0
+            },
+            "Top Verde": {
+              "1T26": -10000.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": -1252789.0,
+            "2T26": -591867.0
+          }
+        },
+        {
+          "codigo": "IA_8",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Aplicações e seguros fora de equivalentes — variação líquida",
+          "natureza": "asset_decrease",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 53791.0,
+              "2T26": -348888.0
+            },
+            "HortiVan": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": 53791.0,
+            "2T26": -348888.0
+          }
+        },
+        {
+          "codigo": "IA_9",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Capitalizações — variação líquida",
+          "natureza": "asset_decrease",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "HortiVan": {
+              "1T26": -10000.0,
+              "2T26": 3000.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 0.0,
+              "2T26": 30000.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 0.0,
+              "2T26": 4000.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": -10000.0,
+            "2T26": 37000.0
+          }
+        },
+        {
+          "codigo": "IA_13",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Imobilizado — variação líquida",
+          "natureza": "asset_decrease",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": -483921.0,
+              "2T26": -92186.0
+            },
+            "HortiVan": {
+              "1T26": -3122.0,
+              "2T26": -30000.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": -120000.0,
+              "2T26": -65399.0
+            },
+            "Água Branca Maringá": {
+              "1T26": -127500.0,
+              "2T26": -6099.0
+            },
+            "Top Verde": {
+              "1T26": -10000.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": -744543.0,
+            "2T26": -193684.0
+          }
+        },
+        {
+          "codigo": "IA_14",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Obras em bens de terceiros — variação líquida",
+          "natureza": "asset_decrease",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": -284787.0,
+              "2T26": -269014.0
+            },
+            "HortiVan": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": -284787.0,
+            "2T26": -269014.0
+          }
+        },
+        {
+          "codigo": "IA_15",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Intangível — variação líquida",
+          "natureza": "asset_decrease",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": -267250.0,
+              "2T26": 182719.0
+            },
+            "HortiVan": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": -267250.0,
+            "2T26": 182719.0
+          }
+        },
+        {
+          "codigo": "FCF",
+          "secao": "DFC",
+          "nivel": 1,
+          "descricao": "Fluxo de caixa das atividades de financiamento (FCF)",
+          "natureza": "subtotal",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": -1188816.0,
+              "2T26": 2792640.0
+            },
+            "HortiVan": {
+              "1T26": -117584.0,
+              "2T26": 259911.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 436529.0,
+              "2T26": 56564.0
+            },
+            "Água Branca Maringá": {
+              "1T26": -171970.0,
+              "2T26": 1760627.0
+            },
+            "Top Verde": {
+              "1T26": -53900.0,
+              "2T26": -562897.0
+            }
+          },
+          "grupo": {
+            "1T26": -1095741.0,
+            "2T26": 4306845.0
+          }
+        },
+        {
+          "codigo": "FL_22",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Empréstimos e financiamentos de curto prazo — variação líquida",
+          "natureza": "liability_increase",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": -1962507.0,
+              "2T26": 6842249.0
+            },
+            "HortiVan": {
+              "1T26": 559351.0,
+              "2T26": 526257.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 57152.0,
+              "2T26": 999990.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 0.0,
+              "2T26": 2000000.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": -1346004.0,
+            "2T26": 10368496.0
+          }
+        },
+        {
+          "codigo": "FL_23",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Créditos rotativos — variação líquida",
+          "natureza": "liability_increase",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "HortiVan": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 500000.0,
+              "2T26": -700000.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": 500000.0,
+            "2T26": -700000.0
+          }
+        },
+        {
+          "codigo": "FL_27",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Banco do Brasil de longo prazo — variação líquida",
+          "natureza": "liability_increase",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "HortiVan": {
+              "1T26": -85715.0,
+              "2T26": -85714.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": -85714.0,
+              "2T26": -85714.0
+            },
+            "Água Branca Maringá": {
+              "1T26": -92857.0,
+              "2T26": -92857.0
+            },
+            "Top Verde": {
+              "1T26": -125082.0,
+              "2T26": -125081.0
+            }
+          },
+          "grupo": {
+            "1T26": -389368.0,
+            "2T26": -389366.0
+          }
+        },
+        {
+          "codigo": "FL_28",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Bradesco de longo prazo — variação líquida",
+          "natureza": "liability_increase",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "HortiVan": {
+              "1T26": -586087.0,
+              "2T26": -136020.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": -8201.0,
+              "2T26": -8201.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": -594288.0,
+            "2T26": -144221.0
+          }
+        },
+        {
+          "codigo": "FL_29",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Arrendamentos / leasing de longo prazo — variação líquida",
+          "natureza": "liability_increase",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "HortiVan": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": -107539.0,
+              "2T26": -107538.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": -107539.0,
+            "2T26": -107538.0
+          }
+        },
+        {
+          "codigo": "FL_31",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Outras obrigações não circulantes — variação líquida",
+          "natureza": "liability_increase",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "HortiVan": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": 0.0,
+            "2T26": 0.0
+          }
+        },
+        {
+          "codigo": "PL_EX_LL",
+          "secao": "DFC",
+          "nivel": 3,
+          "descricao": "Movimentos líquidos de PL, exceto lucro da DRE — a detalhar",
+          "natureza": "equity_ex_profit",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 773691.0,
+              "2T26": -4049609.0
+            },
+            "HortiVan": {
+              "1T26": -5133.0,
+              "2T26": -44612.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 80831.0,
+              "2T26": -41973.0
+            },
+            "Água Branca Maringá": {
+              "1T26": -79113.0,
+              "2T26": -146516.0
+            },
+            "Top Verde": {
+              "1T26": 71182.0,
+              "2T26": -437816.0
+            }
+          },
+          "grupo": {
+            "1T26": 841458.0,
+            "2T26": -4720526.0
+          }
+        },
+        {
+          "codigo": "CASH_CHANGE",
+          "secao": "DFC",
+          "nivel": 1,
+          "descricao": "Variação líquida de caixa",
+          "natureza": "cash_change",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": -46866.0,
+              "2T26": -121861.0
+            },
+            "HortiVan": {
+              "1T26": -246414.0,
+              "2T26": 158102.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 380201.0,
+              "2T26": 508058.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 129372.0,
+              "2T26": -136842.0
+            },
+            "Top Verde": {
+              "1T26": 170261.0,
+              "2T26": -115545.0
+            }
+          },
+          "grupo": {
+            "1T26": 386554.0,
+            "2T26": 291912.0
+          }
+        },
+        {
+          "codigo": "CASH_START",
+          "secao": "DFC",
+          "nivel": 2,
+          "descricao": "Caixa e equivalentes no início",
+          "natureza": "cash_start",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 1892430.0,
+              "2T26": 1845564.0
+            },
+            "HortiVan": {
+              "1T26": 355881.0,
+              "2T26": 109467.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 34747.0,
+              "2T26": 414948.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 14884.0,
+              "2T26": 144256.0
+            },
+            "Top Verde": {
+              "1T26": 146874.0,
+              "2T26": 317135.0
+            }
+          },
+          "grupo": {
+            "1T26": 2444816.0,
+            "2T26": 2831370.0
+          }
+        },
+        {
+          "codigo": "CASH_END",
+          "secao": "DFC",
+          "nivel": 2,
+          "descricao": "Caixa e equivalentes no final",
+          "natureza": "cash_end",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 1845564.0,
+              "2T26": 1723703.0
+            },
+            "HortiVan": {
+              "1T26": 109467.0,
+              "2T26": 267569.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 414948.0,
+              "2T26": 923006.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 144256.0,
+              "2T26": 7414.0
+            },
+            "Top Verde": {
+              "1T26": 317135.0,
+              "2T26": 201590.0
+            }
+          },
+          "grupo": {
+            "1T26": 2831370.0,
+            "2T26": 3123282.0
+          }
+        },
+        {
+          "codigo": "RECON",
+          "secao": "DFC",
+          "nivel": 2,
+          "descricao": "Diferença de conciliação",
+          "natureza": "reconciliation",
+          "empresas": {
+            "Água Branca matriz/filiais": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "HortiVan": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Morena / Top Frutas": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Água Branca Maringá": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            },
+            "Top Verde": {
+              "1T26": 0.0,
+              "2T26": 0.0
+            }
+          },
+          "grupo": {
+            "1T26": 0.0,
+            "2T26": 0.0
+          }
+        }
+      ],
+      "method": "Método indireto, partindo do lucro líquido da DRE e das variações do BP contábil",
+      "status": {
+        "Água Branca matriz/filiais": {
+          "1T26": "CONCILIADO",
+          "2T26": "CONCILIADO"
+        },
+        "HortiVan": {
+          "1T26": "CONCILIADO",
+          "2T26": "CONCILIADO"
+        },
+        "Top Morena / Top Frutas": {
+          "1T26": "CONCILIADO",
+          "2T26": "CONCILIADO"
+        },
+        "Água Branca Maringá": {
+          "1T26": "CONCILIADO",
+          "2T26": "CONCILIADO"
+        },
+        "Top Verde": {
+          "1T26": "CONCILIADO",
+          "2T26": "CONCILIADO"
+        }
+      },
+      "group_status": {
+        "1T26": "CONCILIADO",
+        "2T26": "CONCILIADO"
+      },
+      "cash_policy": "Disponibilidade do BP; aplicações, seguros, capitalizações e SWAP não classificados como equivalentes sem evidência CPC 03.",
+      "granularity": "Água Branca matriz/filiais (001-011 consolidado), 050, 100, 101-M, 103 e Grupo.",
+      "limitations": [
+        "Movimentos patrimoniais apresentados por variação líquida; sem razão, não há segregação de fluxos brutos.",
+        "Movimentos de PL, exceto o lucro da DRE, permanecem agrupados até separar aportes, distribuições, pagamentos e reclassificações.",
+        "O ajuste gerencial de R$ 108.550 exibido no relatório específico de PL não integra esta DFC; a DFC usa exclusivamente o BP contábil e a DRE formal.",
+        "Transferências internas entre 001-011 não são apresentadas como fluxo e ficam absorvidas no bloco consolidado de tesouraria."
+      ],
+      "coverage_note": "1T26 e 2T26; unidades 004 e 010 mantidas como sem movimento confirmado no 2T26.",
+      "sources": {
+        "BP": [
+          "BALANCO_2026.xlsx",
+          "BPG_2026.xlsx",
+          "BP_103_Top_Verde_2026.xlsx",
+          "BP_050_Hortvan_2026.xlsx"
+        ],
+        "DRE": [
+          {
+            "period": "1T26",
+            "company": "001 - Porto Velho",
+            "file": "DRE_001.xlsx"
+          },
+          {
+            "period": "1T26",
+            "company": "002 - Cuiabá",
+            "file": "DRE_002.xlsx"
+          },
+          {
+            "period": "1T26",
+            "company": "003 - São Paulo",
+            "file": "DRE_003.xlsx"
+          },
+          {
+            "period": "1T26",
+            "company": "004 - Rio Paranaíba",
+            "file": "DRE_004.xlsx"
+          },
+          {
+            "period": "1T26",
+            "company": "005 - Dracena",
+            "file": "DRE_005.xlsx"
+          },
+          {
+            "period": "1T26",
+            "company": "006 - Campo Grande",
+            "file": "DRE_006.xlsx"
+          },
+          {
+            "period": "1T26",
+            "company": "007 - Belém",
+            "file": "DRE_007.xlsx"
+          },
+          {
+            "period": "1T26",
+            "company": "008 - Vacaria",
+            "file": "DRE_008.xlsx"
+          },
+          {
+            "period": "1T26",
+            "company": "009 - Manaus",
+            "file": "DRE_009.xlsx"
+          },
+          {
+            "period": "1T26",
+            "company": "010 - Petrolina",
+            "file": "DRE_010.xlsx"
+          },
+          {
+            "period": "1T26",
+            "company": "011 - Rio Branco",
+            "file": "DRE_011.xlsx"
+          },
+          {
+            "period": "1T26",
+            "company": "050 - Hortivan",
+            "file": "DRE 050 - Hortivan.xlsx"
+          },
+          {
+            "period": "1T26",
+            "company": "100 - Top Frutas",
+            "file": "DRE 100 - Top Frutas.xlsx"
+          },
+          {
+            "period": "1T26",
+            "company": "101 - Água Branca",
+            "file": "DRE 101 - Maringa.xlsx"
+          },
+          {
+            "period": "1T26",
+            "company": "103 - Top Verde",
+            "file": "DRE 103 - Top Verde.xlsx"
+          },
+          {
+            "period": "2T26",
+            "company": "001 - Porto Velho",
+            "file": "DRE_001.xlsx"
+          },
+          {
+            "period": "2T26",
+            "company": "002 - Cuiabá",
+            "file": "DRE_002.xlsx"
+          },
+          {
+            "period": "2T26",
+            "company": "003 - São Paulo",
+            "file": "DRE_003.xlsx"
+          },
+          {
+            "period": "2T26",
+            "company": "005 - Dracena",
+            "file": "DRE_005.xlsx"
+          },
+          {
+            "period": "2T26",
+            "company": "006 - Campo Grande",
+            "file": "DRE_006.xlsx"
+          },
+          {
+            "period": "2T26",
+            "company": "007 - Belém",
+            "file": "DRE_007.xlsx"
+          },
+          {
+            "period": "2T26",
+            "company": "008 - Vacaria",
+            "file": "DRE_008.xlsx"
+          },
+          {
+            "period": "2T26",
+            "company": "009 - Manaus",
+            "file": "DRE_009.xlsx"
+          },
+          {
+            "period": "2T26",
+            "company": "011 - Rio Branco",
+            "file": "DRE_011.xlsx"
+          },
+          {
+            "period": "2T26",
+            "company": "050 - Hortivan",
+            "file": "DRE_050.xlsx"
+          },
+          {
+            "period": "2T26",
+            "company": "100 - Top Frutas",
+            "file": "DRE_100.xlsx"
+          },
+          {
+            "period": "2T26",
+            "company": "101 - Água Branca",
+            "file": "DRE_101.xlsx"
+          },
+          {
+            "period": "2T26",
+            "company": "103 - Top Verde",
+            "file": "DRE_103.xlsx"
+          },
+          {
+            "period": "Jul/26",
+            "company": "001 - Porto Velho",
+            "file": "DRE_001.xlsx"
+          },
+          {
+            "period": "Jul/26",
+            "company": "002 - Cuiabá",
+            "file": "DRE_002.xlsx"
+          },
+          {
+            "period": "Jul/26",
+            "company": "003 - São Paulo",
+            "file": "DRE_003.xlsx"
+          },
+          {
+            "period": "Jul/26",
+            "company": "005 - Dracena",
+            "file": "DRE_005.xlsx"
+          },
+          {
+            "period": "Jul/26",
+            "company": "006 - Campo Grande",
+            "file": "DRE_006.xlsx"
+          },
+          {
+            "period": "Jul/26",
+            "company": "007 - Belém",
+            "file": "DRE_007.xlsx"
+          },
+          {
+            "period": "Jul/26",
+            "company": "008 - Vacaria",
+            "file": "DRE_008.xlsx"
+          },
+          {
+            "period": "Jul/26",
+            "company": "009 - Manaus",
+            "file": "DRE_009.xlsx"
+          },
+          {
+            "period": "Jul/26",
+            "company": "011 - Rio Branco",
+            "file": "DRE_011.xlsx"
+          }
+        ]
+      },
+      "generated_at": "2026-09-15T11:11:45",
+      "published": false
     }
   }
 }

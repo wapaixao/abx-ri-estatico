@@ -99,6 +99,7 @@ function run() {
   assert(elems.tables.innerHTML.includes('Patrimônio Líquido'), 'Aba PL deve renderizar título/linha de PL');
   assert(elems.tables.innerHTML.includes('10.783.261'), 'Aba PL deve destacar Reserva de Lucros 30/06 corrigida');
   assert(elems.tables.innerHTML.includes('10.987.631'), 'Aba PL deve destacar Total da Reserva de Lucros 30/06 corrigido');
+  assert(elems.tables.innerHTML.includes('não integra o BP nem a DFC'), 'Aba PL deve exibir a separação do ajuste gerencial');
   assert(!elems.tables.innerHTML.includes('31/03/2026'), 'Aba PL não deve exibir coluna 31/03/2026');
   assert(elems.tables.innerHTML.includes('30/06/2026'), 'Aba PL deve exibir coluna 30/06/2026');
   assert(elems.tables.innerHTML.includes('Devedores duvidosos'), 'Aba PL deve trazer notas explicativas');
@@ -139,6 +140,37 @@ function run() {
       assert(Math.abs(detailTotal - subtotal) <= 1, `Ativo Não Circulante deve fechar para ${company.name} em ${period}`);
     }
   }
+
+  const pncSubtotal = bp.rows.find(r => r.descricao === 'Passivo Não Circulante');
+  const pncDetailLabels = [
+    'Banco do Brasil — Longo Prazo',
+    'Bradesco — Longo Prazo',
+    'Arrendamentos / Leasing — Longo Prazo',
+    'Débitos Previdenciários / Tributários — Longo Prazo',
+    'Outras Obrigações Não Circulantes',
+  ];
+  const pncDetails = pncDetailLabels.map(label => {
+    const row = bp.rows.find(r => r.descricao === label);
+    assert(row, `BP deve conter detalhe do Passivo Não Circulante: ${label}`);
+    return row;
+  });
+  for (const company of bp.companies.filter(c => !String(c.name).startsWith('TOTAL'))) {
+    for (const period of bp.periods) {
+      const detailTotal = pncDetails.reduce((sum, row) => sum + (row.empresas[company.name]?.[period] || 0), 0);
+      const subtotal = pncSubtotal.empresas[company.name]?.[period] || 0;
+      assert(Math.abs(detailTotal - subtotal) <= 1, `Passivo Não Circulante deve fechar para ${company.name} em ${period}`);
+    }
+  }
+  for (const period of bp.periods) {
+    const detailTotal = pncDetails.reduce((sum, row) => sum + (row.grupo[period] || 0), 0);
+    assert(Math.abs(detailTotal - (pncSubtotal.grupo[period] || 0)) <= 1, `Passivo Não Circulante do grupo deve fechar em ${period}`);
+  }
+
+  vm.runInContext('reportType="BP"; initSelection(); selected=new Set(["HortiVan"]); selectedPeriods=new Set(["30/06/2026"]); render();', sandbox);
+  assert(elems.tables.innerHTML.includes('Banco do Brasil — Longo Prazo'), 'BP deve renderizar abertura bancária do Passivo Não Circulante');
+  assert(elems.tables.innerHTML.includes('Bradesco — Longo Prazo'), 'BP deve renderizar abertura do Bradesco no Passivo Não Circulante');
+  assert(!elems.tables.innerHTML.includes('Outras Obrigações Não Circulantes'), 'BP deve ocultar detalhe residual zerado');
+
   vm.runInContext('reportType="BP"; initSelection(); selected=new Set(["Água Branca matriz/filiais"]); render();', sandbox);
   assert(elems.tables.innerHTML.includes('Créditos de PIS e COFINS'), 'BP deve renderizar detalhe do Ativo Não Circulante');
   assert(elems.tables.innerHTML.includes('16.928.587'), 'BP deve manter o subtotal de Ativo Não Circulante de 30/06/2026');
@@ -152,6 +184,8 @@ function run() {
   assert(bpRow('PATRIMÔNIO LÍQUIDO').empresas[maringa]['30/06/2026'] === -881854, 'Maringá deve usar PL 30/06 do BPG_2026');
   assert(bpRow('ATIVO').empresas[topFrutas]['30/06/2026'] === 6414951, 'Top Frutas deve usar Ativo 30/06 do BALANCO_2026');
   assert(bpRow('PATRIMÔNIO LÍQUIDO').empresas[topFrutas]['30/06/2026'] === 1617464, 'Top Frutas deve usar PL 30/06 do BALANCO_2026');
+  assert(bpRow('PATRIMÔNIO LÍQUIDO').empresas['Água Branca matriz/filiais']['30/06/2026'] === 15891811, 'BP Água Branca deve usar PL contábil da fonte, sem ajuste gerencial de R$ 108.550');
+  assert(data.reports.PL.scope_note.includes('não integra o BP nem a DFC'), 'Relatório PL deve declarar o ajuste gerencial apartado');
   const topVerde = 'Top Verde';
   assert(bpRow('Salários e Contribuições').empresas[topVerde]['31/12/2025'] === 72221, 'Top Verde deve reconhecer Salrios/Salários em 31/12/2025');
   assert(bpRow('Salários e Contribuições').empresas[topVerde]['31/03/2026'] === 92205, 'Top Verde deve reconhecer Salrios/Salários em 31/03/2026');
@@ -249,6 +283,42 @@ function run() {
       col += span;
     }
   }
+
+  const dfc = data.reports.DFC;
+  assert(dfc, 'data.json deve conter o relatório DFC');
+  assert(/id="btn-DFC"/.test(html), 'Botão DFC deve existir no RI');
+  assert(JSON.stringify(dfc.periods) === JSON.stringify(['1T26', '2T26']), 'DFC deve conter somente 1T26 e 2T26');
+  assert(dfc.companies.length === 5, 'DFC deve conter os cinco blocos de tesouraria');
+  assert(dfc.companies.some(c => c.name === 'Água Branca matriz/filiais'), 'DFC deve consolidar 001-011 no bloco Água Branca');
+  assert(!JSON.stringify(dfc.sources).includes('/root/'), 'DFC publicada não deve expor caminhos absolutos do servidor');
+  const dfcRows = Object.fromEntries(dfc.rows.map(r => [r.codigo, r]));
+  const dfcCompanies = dfc.companies.map(c => c.name);
+  for (const company of dfcCompanies) {
+    for (const p of dfc.periods) {
+      const start = dfcRows.CASH_START.empresas[company][p];
+      const fco = dfcRows.FCO.empresas[company][p];
+      const fci = dfcRows.FCI.empresas[company][p];
+      const fcf = dfcRows.FCF.empresas[company][p];
+      const difference = dfcRows.RECON.empresas[company][p];
+      const end = dfcRows.CASH_END.empresas[company][p];
+      assert(Math.abs(start + fco + fci + fcf + difference - end) <= 1, `DFC ${company} ${p} deve reconciliar caixa`);
+      assert(Math.abs(difference) <= 1, `DFC ${company} ${p} deve fechar sem ajustes gerenciais`);
+    }
+  }
+  assert(Math.abs(dfcRows.RECON.empresas['Água Branca matriz/filiais']['2T26']) <= 1, 'DFC Água Branca 2T26 não deve absorver o ajuste gerencial de R$ 108.550');
+  assert(Math.abs(dfcRows.RECON.grupo['2T26']) <= 1, 'DFC Grupo 2T26 deve fechar sem o ajuste gerencial de R$ 108.550');
+  assert(dfc.group_status['2T26'] === 'CONCILIADO', 'DFC Grupo 2T26 deve estar conciliado');
+  assert(dfc.limitations.some(text => text.includes('não integra esta DFC')), 'DFC deve declarar a exclusão do ajuste gerencial de R$ 108.550');
+  assert(Math.abs(dfcRows.FCO.grupo['1T26'] - 2735084) <= 1, 'FCO Grupo 1T26 incorreto');
+  assert(Math.abs(dfcRows.FCI.grupo['2T26'] - (-591867)) <= 1, 'FCI Grupo 2T26 incorreto');
+  assert(Math.abs(dfcRows.FCF.grupo['2T26'] - 4306845) <= 1, 'FCF Grupo 2T26 incorreto');
+  vm.runInContext('reportType="DFC"; initSelection(); selectedPeriods=new Set(["2T26"]); renderSelectors(); render();', sandbox);
+  assert(elems.tables.innerHTML.includes('DFC indireta preliminar'), 'DFC deve exibir aviso de caráter preliminar');
+  assert(elems.tables.innerHTML.includes('Base exclusiva: BP contábil e DRE formal'), 'DFC deve declarar visualmente sua base exclusiva');
+  assert(!elems.tables.innerHTML.includes('permanece explicitamente pendente'), 'DFC não deve apresentar o ajuste gerencial como pendência');
+  assert(elems.tables.innerHTML.includes('Diferença de conciliação'), 'DFC deve renderizar a diferença de conciliação');
+  assert(elems.cards.innerHTML.includes('DIF. A CONCILIAR'), 'DFC deve renderizar cartão da diferença');
+  assert(elems.selectorTitle.textContent === 'Blocos de tesouraria', 'DFC deve identificar corretamente o seletor');
 
   vm.runInContext('reportType="DRU"; initSelection(); selected=new Set(["006 - Campo Grande"]); selectedPeriods=new Set(["Jul/26"]); renderSelectors(); render();', sandbox);
   assert(!elems.tables.innerHTML.includes('MATERIAIS PARA OBRA'), 'DRU deve ocultar Materiais para obra quando zerado');
