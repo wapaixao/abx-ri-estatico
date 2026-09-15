@@ -2,7 +2,7 @@ function dreSemMovimento(company,period){return reportType==='DRE'&&rep().covera
 function drePeriodHeader(company,period,first){const missing=dreSemMovimento(company,period);return '<th class="period-head '+(first?'sep-left ':'')+(missing?'sem-movimento':'')+'"'+(missing?' title="Sem movimento — DRE não recebido"':'')+'>'+esc(period)+(missing?'<small class="movement-status">Sem movimento</small>':'')+'</th>'}
 function renderMatrix(){
   const comps=effectiveCompanies(),ps=activePeriods(),rows=rep().rows.filter(shouldShowRow),synthetic=viewMode==='summary',tableMode=synthetic?'sideTotal':viewMode;
-  const dfcNote=reportType==='DFC'?'<div class="dfc-disclaimer"><strong>DFC indireta preliminar.</strong> Base exclusiva: BP contábil e DRE formal. O ajuste gerencial de R$ 108.550 do relatório específico de PL não integra esta DFC.</div>':'';
+  const dfcNote=reportType==='DFC'?'<div class="dfc-disclaimer"><strong>DFC indireta preliminar.</strong> Elaborada a partir do BP contábil e da DRE formal.</div>':'';
   let out='<section class="panel table-panel report-'+reportType+'"><div class="table-head"><h2>'+esc(rep().label)+' — '+(synthetic?'visualização sintética':(tableMode==='total'?'Total':(ps.length>1?'períodos por bloco':'período por bloco')))+'</h2><span class="pill">'+comps.length+' selecionada(s)'+(synthetic?' · sintético':'')+'</span></div>'+dfcNote+'<div class="table-wrap"><table>';
   if(tableMode==='total'){
     out+='<thead><tr><th class="desc">Descrição</th>'+ps.map((p,i)=>'<th class="period-head '+(i===0?'sep-left':'')+'">'+esc(p)+'</th>').join('')+'</tr></thead><tbody>';

@@ -191,7 +191,7 @@ def main() -> None:
         "limitations": [
             "Movimentos patrimoniais apresentados por variação líquida; sem razão, não há segregação de fluxos brutos.",
             "Movimentos de PL, exceto o lucro da DRE, permanecem agrupados até separar aportes, distribuições, pagamentos e reclassificações.",
-            "O ajuste gerencial de R$ 108.550 exibido no relatório específico de PL não integra esta DFC; a DFC usa exclusivamente o BP contábil e a DRE formal.",
+
             "Transferências internas entre 001-011 não são apresentadas como fluxo e ficam absorvidas no bloco consolidado de tesouraria.",
         ],
         "coverage_note": "1T26 e 2T26; unidades 004 e 010 mantidas como sem movimento confirmado no 2T26.",

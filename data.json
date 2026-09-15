@@ -1420,8 +1420,7 @@
       },
       "pl_audit_status": "audited",
       "adjustment_pl_visibility": "visible",
-      "pl_audit_date": "14/09/2026",
-      "basis_note": "BP contábil conforme fontes; ajustes gerenciais do relatório específico de PL não integram o BP nem a DFC."
+      "pl_audit_date": "14/09/2026"
     },
     "DRU": {
       "label": "Demonstração do Resultado da Unidade (DRU)",
@@ -35146,8 +35145,7 @@
             }
           }
         ]
-      ],
-      "scope_note": "Relatório gerencial apartado; o ajuste gerencial de R$ 108.550 não integra o BP nem a DFC."
+      ]
     },
     "DRE": {
       "label": "Demonstração do Resultado do Exercício (DRE)",
@@ -51296,7 +51294,6 @@
       "limitations": [
         "Movimentos patrimoniais apresentados por variação líquida; sem razão, não há segregação de fluxos brutos.",
         "Movimentos de PL, exceto o lucro da DRE, permanecem agrupados até separar aportes, distribuições, pagamentos e reclassificações.",
-        "O ajuste gerencial de R$ 108.550 exibido no relatório específico de PL não integra esta DFC; a DFC usa exclusivamente o BP contábil e a DRE formal.",
         "Transferências internas entre 001-011 não são apresentadas como fluxo e ficam absorvidas no bloco consolidado de tesouraria."
       ],
       "coverage_note": "1T26 e 2T26; unidades 004 e 010 mantidas como sem movimento confirmado no 2T26.",
@@ -51495,7 +51492,7 @@
           }
         ]
       },
-      "generated_at": "2026-09-15T11:11:45",
+      "generated_at": "2026-09-15T12:51:31",
       "published": false
     }
   }

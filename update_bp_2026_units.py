@@ -350,8 +350,8 @@ def update_data(extracted: dict[str, dict[str, dict[str, float]]], metadata: dic
                 p: int(v) if abs(v - round(v)) < 1e-9 else v for p, v in period_values.items()
             }
 
-    # O BP usa o PL contábil da fonte. O ajuste de R$ 108.550 permanece apenas
-    # no relatório gerencial reports.PL e não participa do BP nem da DFC.
+    # O BP e a DFC usam o PL contábil da fonte; relatórios gerenciais apartados
+    # não alimentam essas demonstrações.
     source_pl = extract_agua_branca_source_pl()
     bp_pl_row = rows_by_label["PATRIMÔNIO LÍQUIDO"][0]
     bp_pl_row.setdefault("empresas", {})[AGUA_BRANCA_COMPANY] = {
@@ -371,8 +371,8 @@ def update_data(extracted: dict[str, dict[str, dict[str, float]]], metadata: dic
     bp["pl_audit_status"] = "audited"
     bp["pl_audit_date"] = "14/09/2026"
     bp["adjustment_pl_visibility"] = "visible"
-    bp["basis_note"] = "BP contábil conforme fontes; ajustes gerenciais do relatório específico de PL não integram o BP nem a DFC."
-    data["reports"]["PL"]["scope_note"] = "Relatório gerencial apartado; o ajuste gerencial de R$ 108.550 não integra o BP nem a DFC."
+    bp.pop("basis_note", None)
+    data["reports"]["PL"].pop("scope_note", None)
     DATA.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return data
 

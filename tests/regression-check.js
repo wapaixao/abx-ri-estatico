@@ -99,7 +99,7 @@ function run() {
   assert(elems.tables.innerHTML.includes('Patrimônio Líquido'), 'Aba PL deve renderizar título/linha de PL');
   assert(elems.tables.innerHTML.includes('10.783.261'), 'Aba PL deve destacar Reserva de Lucros 30/06 corrigida');
   assert(elems.tables.innerHTML.includes('10.987.631'), 'Aba PL deve destacar Total da Reserva de Lucros 30/06 corrigido');
-  assert(elems.tables.innerHTML.includes('não integra o BP nem a DFC'), 'Aba PL deve exibir a separação do ajuste gerencial');
+  assert(!elems.tables.innerHTML.includes('108.550'), 'Aba PL não deve exibir nota explicativa sobre o ajuste gerencial');
   assert(!elems.tables.innerHTML.includes('31/03/2026'), 'Aba PL não deve exibir coluna 31/03/2026');
   assert(elems.tables.innerHTML.includes('30/06/2026'), 'Aba PL deve exibir coluna 30/06/2026');
   assert(elems.tables.innerHTML.includes('Devedores duvidosos'), 'Aba PL deve trazer notas explicativas');
@@ -184,8 +184,8 @@ function run() {
   assert(bpRow('PATRIMÔNIO LÍQUIDO').empresas[maringa]['30/06/2026'] === -881854, 'Maringá deve usar PL 30/06 do BPG_2026');
   assert(bpRow('ATIVO').empresas[topFrutas]['30/06/2026'] === 6414951, 'Top Frutas deve usar Ativo 30/06 do BALANCO_2026');
   assert(bpRow('PATRIMÔNIO LÍQUIDO').empresas[topFrutas]['30/06/2026'] === 1617464, 'Top Frutas deve usar PL 30/06 do BALANCO_2026');
-  assert(bpRow('PATRIMÔNIO LÍQUIDO').empresas['Água Branca matriz/filiais']['30/06/2026'] === 15891811, 'BP Água Branca deve usar PL contábil da fonte, sem ajuste gerencial de R$ 108.550');
-  assert(data.reports.PL.scope_note.includes('não integra o BP nem a DFC'), 'Relatório PL deve declarar o ajuste gerencial apartado');
+  assert(bpRow('PATRIMÔNIO LÍQUIDO').empresas['Água Branca matriz/filiais']['30/06/2026'] === 15891811, 'BP Água Branca deve usar o PL contábil da fonte');
+  assert(!data.reports.PL.scope_note, 'Relatório PL não deve carregar nota explicativa do ajuste gerencial');
   const topVerde = 'Top Verde';
   assert(bpRow('Salários e Contribuições').empresas[topVerde]['31/12/2025'] === 72221, 'Top Verde deve reconhecer Salrios/Salários em 31/12/2025');
   assert(bpRow('Salários e Contribuições').empresas[topVerde]['31/03/2026'] === 92205, 'Top Verde deve reconhecer Salrios/Salários em 31/03/2026');
@@ -305,16 +305,17 @@ function run() {
       assert(Math.abs(difference) <= 1, `DFC ${company} ${p} deve fechar sem ajustes gerenciais`);
     }
   }
-  assert(Math.abs(dfcRows.RECON.empresas['Água Branca matriz/filiais']['2T26']) <= 1, 'DFC Água Branca 2T26 não deve absorver o ajuste gerencial de R$ 108.550');
-  assert(Math.abs(dfcRows.RECON.grupo['2T26']) <= 1, 'DFC Grupo 2T26 deve fechar sem o ajuste gerencial de R$ 108.550');
+  assert(Math.abs(dfcRows.RECON.empresas['Água Branca matriz/filiais']['2T26']) <= 1, 'DFC Água Branca 2T26 deve estar conciliada');
+  assert(Math.abs(dfcRows.RECON.grupo['2T26']) <= 1, 'DFC Grupo 2T26 deve estar conciliada');
   assert(dfc.group_status['2T26'] === 'CONCILIADO', 'DFC Grupo 2T26 deve estar conciliado');
-  assert(dfc.limitations.some(text => text.includes('não integra esta DFC')), 'DFC deve declarar a exclusão do ajuste gerencial de R$ 108.550');
+  assert(!JSON.stringify(dfc).includes('108.550'), 'DFC não deve conter nota explicativa sobre o ajuste gerencial');
   assert(Math.abs(dfcRows.FCO.grupo['1T26'] - 2735084) <= 1, 'FCO Grupo 1T26 incorreto');
   assert(Math.abs(dfcRows.FCI.grupo['2T26'] - (-591867)) <= 1, 'FCI Grupo 2T26 incorreto');
   assert(Math.abs(dfcRows.FCF.grupo['2T26'] - 4306845) <= 1, 'FCF Grupo 2T26 incorreto');
   vm.runInContext('reportType="DFC"; initSelection(); selectedPeriods=new Set(["2T26"]); renderSelectors(); render();', sandbox);
   assert(elems.tables.innerHTML.includes('DFC indireta preliminar'), 'DFC deve exibir aviso de caráter preliminar');
-  assert(elems.tables.innerHTML.includes('Base exclusiva: BP contábil e DRE formal'), 'DFC deve declarar visualmente sua base exclusiva');
+  assert(elems.tables.innerHTML.includes('Elaborada a partir do BP contábil e da DRE formal'), 'DFC deve declarar visualmente sua base contábil');
+  assert(!elems.tables.innerHTML.includes('108.550'), 'DFC não deve exibir nota explicativa sobre o ajuste gerencial');
   assert(!elems.tables.innerHTML.includes('permanece explicitamente pendente'), 'DFC não deve apresentar o ajuste gerencial como pendência');
   assert(elems.tables.innerHTML.includes('Diferença de conciliação'), 'DFC deve renderizar a diferença de conciliação');
   assert(elems.cards.innerHTML.includes('DIF. A CONCILIAR'), 'DFC deve renderizar cartão da diferença');
