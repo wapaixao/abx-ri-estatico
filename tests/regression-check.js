@@ -287,6 +287,7 @@ function run() {
   const dfc = data.reports.DFC;
   assert(dfc, 'data.json deve conter o relatório DFC');
   assert(/id="btn-DFC"/.test(html), 'Botão DFC deve existir no RI');
+  assert(html.indexOf('id="btn-BP"') < html.indexOf('id="btn-DRE"') && html.indexOf('id="btn-DRE"') < html.indexOf('id="btn-DFC"'), 'Ordem inicial dos relatórios deve ser BP, DRE, DFC');
   assert(JSON.stringify(dfc.periods) === JSON.stringify(['1T26', '2T26']), 'DFC deve conter somente 1T26 e 2T26');
   assert(dfc.companies.length === 5, 'DFC deve conter os cinco blocos de tesouraria');
   assert(dfc.companies.some(c => c.name === 'Água Branca matriz/filiais'), 'DFC deve consolidar 001-011 no bloco Água Branca');
@@ -313,12 +314,12 @@ function run() {
   assert(Math.abs(dfcRows.FCI.grupo['2T26'] - (-591867)) <= 1, 'FCI Grupo 2T26 incorreto');
   assert(Math.abs(dfcRows.FCF.grupo['2T26'] - 4306845) <= 1, 'FCF Grupo 2T26 incorreto');
   vm.runInContext('reportType="DFC"; initSelection(); selectedPeriods=new Set(["2T26"]); renderSelectors(); render();', sandbox);
-  assert(elems.tables.innerHTML.includes('DFC indireta preliminar'), 'DFC deve exibir aviso de caráter preliminar');
-  assert(elems.tables.innerHTML.includes('Elaborada a partir do BP contábil e da DRE formal'), 'DFC deve declarar visualmente sua base contábil');
+  assert(!elems.tables.innerHTML.includes('DFC indireta preliminar'), 'DFC não deve exibir a nota metodológica removida');
+  assert(!elems.tables.innerHTML.includes('Elaborada a partir do BP contábil e da DRE formal'), 'DFC não deve exibir texto metodológico removido');
   assert(!elems.tables.innerHTML.includes('108.550'), 'DFC não deve exibir nota explicativa sobre o ajuste gerencial');
   assert(!elems.tables.innerHTML.includes('permanece explicitamente pendente'), 'DFC não deve apresentar o ajuste gerencial como pendência');
   assert(elems.tables.innerHTML.includes('Diferença de conciliação'), 'DFC deve renderizar a diferença de conciliação');
-  assert(elems.cards.innerHTML.includes('DIF. A CONCILIAR'), 'DFC deve renderizar cartão da diferença');
+  assert(elems.cards.innerHTML === '', 'DFC não deve renderizar cartões-resumo');
   assert(elems.selectorTitle.textContent === 'Blocos de tesouraria', 'DFC deve identificar corretamente o seletor');
 
   vm.runInContext('reportType="DRU"; initSelection(); selected=new Set(["006 - Campo Grande"]); selectedPeriods=new Set(["Jul/26"]); renderSelectors(); render();', sandbox);
